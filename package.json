@@ -1,0 +1,9 @@
+{
+	"name": "server-ui-app",
+	"main": "mainApp.js",
+	"dependencies": {
+		"ejs": "^3.1.10",
+		"express": "^4.19.2",
+		"bootstrap": "5.3.3"
+	}
+}
