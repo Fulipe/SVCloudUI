@@ -4,6 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const PORT = 5602;
 
+app.use(express.static(__dirname + '/views/'));
 app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
 app.set("view engine", "ejs");
 
@@ -18,13 +19,14 @@ fs.readdir(directoryPath, (err, files) => {
     return;
   }
   
-  // Filtra apenas as pastas
-  const folders = files;//.filter(file => fs.statSync(path.join(directoryPath, file)).isDirectory());
+  // Filtra e mostra apenas as pastas que não tenham '.' no inicio. 
+  var pattern = '.';
+  const folders = files.filter((str) => {return !str.includes(pattern)});//filter(file => fs.statSync(path.join(directoryPath, file)).isDirectory());
   
   // Mostra as pastas encontradas
   console.log('Pastas existentes:', folders);
   app.get("/", (req, res) => {
-    console.log('Oi!')
+    console.log('GET/')
     res.render('index', {folders: folders});
   });
 

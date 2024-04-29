@@ -3,66 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles/styles.css">
     <title>filipe-cloud</title>
-    <link rel="stylesheet" href="styles/styles.css" />
+    <link rel="stylesheet" type="text/css" href="styles/styles.css" />
     <link rel="stylesheet" href="/css/bootstrap.min.css" />
+
 </head>
 <body>
     <%- include('shared/header') -%>
-    <% folders.forEach(file => { %>
-
-        <div class="row">
-            <div class="col-sm-4 mb-3 mb-sm-0">
-                <div class="card">
+    <div class="row">
+        <% folders.forEach(file => { %>
+        <div class="col-sm-4 mb-3 mb-sm-0">
+                <div class="card ">
                     <div class="card-body">
-                        <h5 class="card-title"><% file %></h5>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                        <h5 class="card-title"><%= file %></h5>
+                        <a href="#" class="btn btn-primary">>>></a>
                     </div>
                 </div>
             </div>
-        </div>
-            <!-- <div class="col-sm-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title"><% file %></h5>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title"><% file %></h5>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title"><% file %></h5>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title"><% file %></h5>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-4">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title"><% file %></h5>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
-                    </div>
-                </div>
-            </div>
-        </div> -->
-    <% }) %>
+        <% }) %>
+    </div>
 </body>
 </html>
