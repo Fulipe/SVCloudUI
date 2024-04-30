@@ -3,6 +3,9 @@ const app = express();
 const fs = require('fs');
 const path = require('path');
 const PORT = 5602;
+const routes = require('./routes/routes');
+
+app.use('/', routes);
 
 app.use(express.static(__dirname + '/views/'));
 app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
@@ -28,7 +31,7 @@ fs.readdir(directoryPath, (err, files) => {
   console.log('Pastas existentes:', folders);
   
   app.get("/", (req, res) => {
-    console.log('GET/');
+    console.log('GET/root');
     res.render('index', {folders: folders});
   });
 
