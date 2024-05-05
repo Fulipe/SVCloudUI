@@ -8,10 +8,5 @@ const path = require('path');
     res.render('index', {folders: folders});
   });
   
-  router.get("/FOTOS", (req,res)=>{
-      console.log('GET/FOTOS');
-      res.render('fotos');
-  });
-
 
 module.exports = router; 

@@ -1,7 +1,6 @@
 const express = require('express');
 const app = express();
 const fs = require('fs');
-const { url } = require('inspector');
 const path = require('path');
 const PORT = 5602;
 // const routes = require('./routes/routes');
@@ -16,21 +15,20 @@ const root= './data';
 const urlsHistory = [];
 
 app.get('/data', (req, res) =>{
-  var directoryPath = path.resolve(root); //diretorio que root
-  // Diretório scaneado
-  urlsHistory.push(directoryPath);
-  // const directoryPath = path.resolve(__dirname + '/data') //diretorio usado pela maquina
+  var directoryPath = path.resolve(root); 
 
-  // Lista os arquivos e pastas no diretório
+  urlsHistory.push(directoryPath);
+
+
   fs.readdir(directoryPath, (err, files) => {
     if (err) {
       console.error('Erro ao ler diretório:', err);
       return;
     }
-    // Filtra e mostra apenas as pastas e ficheiros que não tenham '.' no inicio. 
+
     var pattern = '.';
-    const folders = files.filter((str) => {return !str.startsWith(pattern)});//filter(file => fs.statSync(path.join(directoryPath, file)).isDirectory());
-    // Mostra as pastas encontradas
+    const folders = files.filter((str) => {return !str.startsWith(pattern)});
+
     console.log('Pastas existentes:', folders);
     console.log(directoryPath);
     console.log(urlsHistory);
@@ -41,30 +39,23 @@ app.get('/data', (req, res) =>{
 });
 
 app.get('/anterior', (req, res) =>{
-  // Diretório scaneado
 
-  const dir = req.params.diretorio || '';//valor de <%=file%> no index
-   
+  const dir = req.params.diretorio || '';
+  
   var lastUrl = urlsHistory.slice(-1).toString();
   urlsHistory.pop(lastUrl)
-  // var lastUrl = urlsHistory[-1].toString();
-  
-  // const directoryPath = path.resolve(__dirname + '/data') //diretorio usado pela maquina
 
-  var directoryPath = path.dirname(lastUrl); //diretorio que root
+  var directoryPath = path.dirname(lastUrl);
 
-  // Lista os arquivos e pastas no diretório
   fs.readdir(directoryPath, (err, files) => {
     if (err) {
       console.error('Erro ao ler diretório:', err);
       return;
     }
     
-    // Filtra e mostra apenas as pastas e ficheiros que não tenham '.' no inicio. 
     var pattern = '.';
-    const folders = files.filter((str) => {return !str.startsWith(pattern)});//filter(file => fs.statSync(path.join(directoryPath, file)).isDirectory());
+    const folders = files.filter((str) => {return !str.startsWith(pattern)});
     
-    // Mostra as pastas encontradas
     console.log('Pastas existentes:', folders);
     console.log(directoryPath)
     console.log(urlsHistory);
@@ -75,26 +66,22 @@ app.get('/anterior', (req, res) =>{
 
 app.get('/:diretorio?/', (req, res) =>{
   
-  // Diretório scaneado
-
-  const dir = req.params.diretorio || '';//valor de <%=file%> no index
+  const dir = req.params.diretorio || '';
   var lastUrl = urlsHistory.slice(-1).toString();
-  // const directoryPath = path.resolve(__dirname + '/data') //diretorio usado pela maquina
 
-  var directoryPath = path.join(lastUrl, dir); //diretorio que root
+  var directoryPath = path.join(lastUrl, dir); 
   urlsHistory.push(directoryPath)
 
 
-  // Lista os arquivos e pastas no diretório
   fs.readdir(directoryPath, (err, files) => {
     if (err) {
       console.error('Erro ao ler diretório:', err);
       return;
     }
-    // Filtra e mostra apenas as pastas e ficheiros que não tenham '.' no inicio. 
+
     var pattern = '.';
-    const folders = files.filter((str) => {return !str.startsWith(pattern)});//filter(file => fs.statSync(path.join(directoryPath, file)).isDirectory());
-    // Mostra as pastas encontradas
+    const folders = files.filter((str) => {return !str.startsWith(pattern)});
+
     console.log('Pastas existentes:', folders);
     console.log(directoryPath)
     console.log(urlsHistory);
