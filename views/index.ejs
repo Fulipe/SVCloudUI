@@ -9,15 +9,16 @@
 
 </head>
 <body>
-    <h3 class="danger"></h3>
     <%- include('shared/header') -%>
     <div class="row">
+        
+        <h3 class="danger"><%= dir %></h3>
         <% folders.forEach(file => { %>
         <div class="col-sm-4 mb-3 mb-sm-0">
                 <div class="card ">
                     <div class="card-body">
                         <h5 class="card-title"><%= file %></h5>
-                        <a href="./<%= file%>" class="btn btn-primary">Ir >>></a>
+                        <a href="<%= file%>" class="btn btn-primary">Ir >>></a>
                     </div>
                 </div>
             </div>
