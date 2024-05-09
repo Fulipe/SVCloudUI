@@ -12,9 +12,10 @@
     <%- include('shared/header') -%>
     <div class="row">
         
-        <h3 class="danger"><%= dir %></h3>
+        <h3 class=><%= dir %></h3>        
+        <h3><%= emptyDirMsg %></h3>
         <% folders.forEach(file => { %>
-        <div class="col-sm-4 mb-3 mb-sm-0">
+            <div class="col-sm-4 mb-3 mb-sm-0">
                 <div class="card ">
                     <div class="card-body">
                         <h5 class="card-title"><%= file %></h5>
