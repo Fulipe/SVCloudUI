@@ -5,3 +5,9 @@ body{
     margin: 20px;
 }
 
+.emptydirmsg{
+    margin: 0 40%;
+}
+.emptydirmsg h3{
+    padding: 3%;
+}

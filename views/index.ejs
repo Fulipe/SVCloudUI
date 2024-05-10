@@ -10,10 +10,9 @@
 </head>
 <body>
     <%- include('shared/header') -%>
+    <h3><%= dir %></h3>
+            
     <div class="row">
-        
-        <h3 class=><%= dir %></h3>        
-        <h3><%= emptyDirMsg %></h3>
         <% folders.forEach(file => { %>
             <div class="col-sm-4 mb-3 mb-sm-0">
                 <div class="card ">
@@ -23,7 +22,13 @@
                     </div>
                 </div>
             </div>
-        <% }) %>
-    </div>
+            <% }) %>
+        </div>
+        <% if (folders.length == 0) { %>
+            <div class="emptydirmsg text-center">
+                <h3 class="text-bg-danger"><%= emptyDirMsg %></h3>
+            </div>
+        <% } %> 
+        
 </body>
 </html> 

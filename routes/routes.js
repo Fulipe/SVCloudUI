@@ -12,7 +12,8 @@ router.get('/', (req, res) =>{
 
   urlsHistory.push(directoryPath);
 
-  var urlSplit = directoryPath.split("\\");
+  //tem de ser "/" porque em Linux os diretórios são separados por "/" ao contrario de Windows que é "\\"
+  var urlSplit = directoryPath.split("/");
   var dir = urlSplit.slice(-1).toString();
 
   console.log("url split: ", dir)
@@ -26,16 +27,14 @@ router.get('/', (req, res) =>{
     var pattern = '.';
     const folders = files.filter((str) => {return !str.startsWith(pattern)});
 
-    if (folders.length == 0){
-      var emptyDirMsg = "Diretorio vazio!";
-    }
+    var emptyDirMsg = "Diretorio vazio!";
 
     console.log('Pastas existentes:', folders);
     console.log(directoryPath);
     console.log(urlsHistory);
     console.log(req.originalUrl)
 
-    res.render('index', {folders: folders, dir:dir, emptyDirMsg:emptyDirMsg});
+    res.render('index', {folders: folders, dir:dir, emptyDirMsg});
   });
 });
 
@@ -48,7 +47,8 @@ router.get('/anterior', (req, res) =>{
   //sets last url to be shown
   var directoryPath = path.dirname(lastUrl);
   
-  const urlSplit = directoryPath.split("\\");
+  //tem de ser "/" porque em Linux os diretórios são separados por "/" ao contrario de Windows que é "\\"
+  const urlSplit = directoryPath.split("/");
   var dir = urlSplit.slice(-1).toString();
 
   console.log("url split: ", urlSplit)
@@ -61,16 +61,14 @@ router.get('/anterior', (req, res) =>{
     
     var pattern = '.';
     const folders = files.filter((str) => {return !str.startsWith(pattern)});
-    
-    if (folders.length == 0){
-      var emptyDirMsg = "Diretorio vazio!";
-    }
+
+    var emptyDirMsg = "Diretorio vazio!";
     
     console.log('Pastas existentes:', folders);
     console.log(directoryPath)
     console.log(urlsHistory);
 
-    res.render('index', {folders: folders, dir:dir, emptyDirMsg:emptyDirMsg});
+    res.render('index', {folders: folders, dir:dir, emptyDirMsg});
     });
 });
 
@@ -90,18 +88,16 @@ router.get('/:diretorio?/', (req, res) =>{
 
     var pattern = '.';
     const folders = files.filter((str) => {return !str.startsWith(pattern)});
-    
-    if (folders.length == 0){
-      var emptyDirMsg = "Diretorio vazio!";
-    }
+
+    var emptyDirMsg = "Diretorio vazio!";
     
     console.log('Pastas existentes:', folders);
     console.log(directoryPath)
     console.log(urlsHistory);
     console.log(req.originalUrl)
 
-    res.render('index', {folders: folders, dir:newDir, emptyDirMsg:emptyDirMsg});
-    });
+    res.render('index', {folders: folders, dir:newDir, emptyDirMsg});
+  });
 });
 
 
