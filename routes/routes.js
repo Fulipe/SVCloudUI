@@ -24,8 +24,8 @@ router.get('/', (req, res) =>{
       return;
     }
 
-    var pattern = '.';
-    const folders = files.filter((str) => {return !str.startsWith(pattern)});
+    // const folders = files.filter(file =>{fs.statSync(path.join(directoryPath, file)).isDirectory()}); -> apenas mostra diretorios
+    const folders = files.filter((str) => {return !str.startsWith('.')});
 
     var emptyDirMsg = "Diretorio vazio!";
 
@@ -59,8 +59,7 @@ router.get('/anterior', (req, res) =>{
       return;
     }
     
-    var pattern = '.';
-    const folders = files.filter((str) => {return !str.startsWith(pattern)});
+    const folders = files.filter((str) => {return !str.startsWith('.')});
 
     var emptyDirMsg = "Diretorio vazio!";
     
@@ -86,8 +85,7 @@ router.get('/:diretorio?/', (req, res) =>{
       return;
     }
 
-    var pattern = '.';
-    const folders = files.filter((str) => {return !str.startsWith(pattern)});
+    const folders = files.filter((str) => {return !str.startsWith('.')});
 
     var emptyDirMsg = "Diretorio vazio!";
     
