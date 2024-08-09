@@ -3,9 +3,9 @@ const app = express();
 const PORT = 5602;
 const routes = require('./routes/routes');
 
+app.set("view engine", "ejs"); 
 app.use(express.static(__dirname + '/views/'));
 app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
-app.set("view engine", "ejs");
 app.get('/favicon.ico', (req, res) => res.status(204));
 app.use('/', routes);
 

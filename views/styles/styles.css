@@ -9,5 +9,6 @@ body{
     margin: 0 40%;
 }
 .emptydirmsg h3{
-    padding: 3%;
+    position: absolute;
+    padding: 10px;
 }

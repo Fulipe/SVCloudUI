@@ -10,25 +10,29 @@
 </head>
 <body>
     <%- include('shared/header') -%>
-    <h3><%= dir %></h3>
-            
+    <a href="<%= anterior %>">
+        <button type="button" class="btn btn-secondary"><b>&larr; Anterior</b></button>
+    </a>
+    <h3><%= caminho %></h3>
     <div class="row">
-        <% folders.forEach(file => { %>
-            <div class="col-sm-4 mb-3 mb-sm-0">
-                <div class="card ">
-                    <div class="card-body">
-                        <h5 class="card-title"><%= file %></h5>
-                        <a href="<%= file%>" class="btn btn-primary">Ir >>></a>
-                    </div>
-                </div>
-            </div>
-            <% }) %>
-        </div>
-        <% if (folders.length == 0) { %>
+        <% if (items.length == 0) { %>
             <div class="emptydirmsg text-center">
                 <h3 class="text-bg-danger"><%= emptyDirMsg %></h3>
             </div>
-        <% } %> 
+        <% } else { %>
+            <% for( let i = 0; i < items.length; i++ ) { %>
+                <div class="col-sm-4 mb-3 mb-sm-0">
+                    <div class="card ">
+                        <div class="card-body">
+                            <h5 class="card-title"><%= items[i].name %></h5>
+                            <a href="<%=items[i].name%>" class="btn btn-primary">Ir >>></a>
+                        </div>
+                    </div>
+                </div>
+            <% } %>
+             
+        <%  } %>
+    </div>
         
 </body>
 </html> 
