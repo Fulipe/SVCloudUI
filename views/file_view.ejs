@@ -10,12 +10,16 @@
 </head>
 <body>
     <%- include('shared/header') -%>
-    <a href="<%= anterior %>">
-        <button type="button" class="btn btn-secondary"><b>&larr; Anterior</b></button>
-    </a>
-
     <div>
-        <%= conteudo %>
+        <a href="<%= anterior %>">
+            <button type="button" class="btn btn-secondary"><b>&larr; Anterior</b></button>
+        </a>
+    </div>
+    <br>
+    <div>
+        <pre>
+            <%=conteudo %>
+        </pre>
     </div>
 </body>
 </html>

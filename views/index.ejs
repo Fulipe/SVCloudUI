@@ -15,17 +15,17 @@
     </a>
     <h3><%= caminho %></h3>
     <div class="row">
-        <% if (items.length == 0) { %>
+        <% if (formattedItems.length == 0) { %>
             <div class="emptydirmsg text-center">
                 <h3 class="text-bg-danger"><%= emptyDirMsg %></h3>
             </div>
         <% } else { %>
-            <% for( let i = 0; i < items.length; i++ ) { %>
+            <% for( let i = 0; i < formattedItems.length; i++ ) { %>
                 <div class="col-sm-4 mb-3 mb-sm-0">
-                    <div class="card ">
+                    <div class="card " style="background-color: rgb(217, 190, 123);">
                         <div class="card-body">
-                            <h5 class="card-title"><%= items[i].name %></h5>
-                            <a href="<%=items[i].name%>" class="btn btn-primary">Ir >>></a>
+                            <h5 class="card-title"><%= formattedItems[i].name %></h5>
+                            <a href="<%=formattedItems[i].name%>" class="btn btn-primary">Ir >>></a>
                         </div>
                     </div>
                 </div>
