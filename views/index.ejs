@@ -21,9 +21,9 @@
             </div>
         <% } else { %>
             <% for( let i = 0; i < formattedItems.length; i++ ) { %>
-                <% if (directories.includes(formattedItems[i])) { %>
+                <% if (checkDir.includes(formattedItems[i])) { %>
                     <div class="col-sm-4 mb-3 mb-sm-0">
-                        <div class="card " style="background-color: rgb(217, 190, 123);">
+                        <div class="card " style="background-color: rgb(243, 215, 146);">
                             <div class="card-body">
                                 <h5 class="card-title"><%= formattedItems[i].name %></h5>
                                 <a href="<%=formattedItems[i].name%>" class="btn btn-primary">Ir >>></a>
@@ -32,7 +32,7 @@
                     </div>
                 <% } else { %> 
                     <div class="col-sm-4 mb-3 mb-sm-0">
-                        <div class="card " style="background-color: rgb(123, 217, 195);">
+                        <div class="card " style="background-color: rgb(123, 190, 217);">
                             <div class="card-body">
                                 <h5 class="card-title"><%= formattedItems[i].name %></h5>
                                 <a href="<%=formattedItems[i].name%>" class="btn btn-primary">Ir >>></a>

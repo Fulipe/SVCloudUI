@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const fs = require('fs').promises;
 const path = require('path');
+const mimetypes = require('mime-types')
 
 const root= path.resolve('data');
 
@@ -37,9 +38,27 @@ router.get('*', async (req,res) =>{
           res.render('index', {checkDir, formattedItems:formattedItems, caminho:decodedReq, anterior:parentPath, emptyDirMsg});
         } else {
             const parentPath = req.path === '/' ? '' : path.join(req.path, '..')
-            const content = await fs.readFile(directoryPath, 'utf-8');
 
-            res.render('file_view', {conteudo:content, anterior:parentPath})
+            const mimeTypes = mimetypes.lookup(directoryPath);
+            if(mimeTypes.startsWith('text')){
+              const content = await fs.readFile(directoryPath, 'utf-8');
+
+              res.render('file_view', {caminho:decodedReq, conteudo:content, tipo: 'texto', anterior:parentPath})
+
+            } else if (mimeTypes.startsWith('image')) {
+              // Se for uma imagem
+              
+              res.render('file_view', { caminho: decodedReq, conteudo: directoryPath, tipo: 'image', anterior: parentPath });
+
+          } else if (mimeTypes.startsWith('video')) {
+              // Se for um vídeo
+              res.render('file_view', { caminho: decodedReq, conteudo: directoryPath, tipo: 'video', anterior: parentPath });
+
+          } else {
+              // Se for outro tipo de arquivo (como binários)
+              res.render('file_view', { caminho: decodedReq, conteudo: 'Este tipo de arquivo não pode ser aberto'})
+          }
+
         }
         
 

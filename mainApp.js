@@ -10,6 +10,6 @@ app.get('/favicon.ico', (req, res) => res.status(204));
 app.use('/', routes);
 
 app.listen(PORT, () => {
-  console.log("Listening on port 5602");
+  console.log("Listening on port " + PORT);
 });  
 

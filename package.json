@@ -2,8 +2,9 @@
 	"name": "server-ui-app",
 	"main": "mainApp.js",
 	"dependencies": {
+		"bootstrap": "5.3.3",
 		"ejs": "^3.1.10",
 		"express": "^4.19.2",
-		"bootstrap": "5.3.3"
+		"mime-types": "^2.1.35"
 	}
 }
