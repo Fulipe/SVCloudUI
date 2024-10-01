@@ -11,7 +11,7 @@
 <body>
     <%- include('shared/header') -%>
     <div>
-        <a href="<%= anterior %>">
+        <a href="..">
             <button type="button" class="btn btn-secondary"><b>&larr; Anterior</b></button>
         </a>
     </div>
@@ -19,13 +19,16 @@
     
     <div>
         <% if (tipo === 'texto') { %>
-            <pre><%= conteudo %></pre>
+            <pre>
+                <%= conteudo %>
+            </pre>
         <% } else if (tipo === 'image') { %>
 
-            <img src="<%= conteudo %>" alt="Imagem">
+            <div><%= imageBuffer%></div>
+
         <% } else if (tipo === 'video') { %>
             <video controls>
-                <source src="<%= caminho %>" type="video/mp4">
+                <source src="<%= conteudo %>" type="video/mp4">
                 Seu navegador não suporta o elemento de vídeo.
             </video>
         <% } else { %>

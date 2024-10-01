@@ -7,7 +7,7 @@ app.set("view engine", "ejs");
 app.use(express.static(__dirname + '/views/'));
 app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
 app.get('/favicon.ico', (req, res) => res.status(204));
-app.use('/', routes);
+app.use('/api', routes);
 
 app.listen(PORT, () => {
   console.log("Listening on port " + PORT);

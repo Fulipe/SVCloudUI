@@ -4,7 +4,7 @@ const fs = require('fs').promises;
 const path = require('path');
 const mimetypes = require('mime-types')
 
-const root= path.resolve('data');
+const root= path.resolve('./data');
 
 const urlsHistory = []
 
@@ -47,17 +47,22 @@ router.get('*', async (req,res) =>{
 
             } else if (mimeTypes.startsWith('image')) {
               // Se for uma imagem
-              
-              res.render('file_view', { caminho: decodedReq, conteudo: directoryPath, tipo: 'image', anterior: parentPath });
 
-          } else if (mimeTypes.startsWith('video')) {
+              const imageBuffer = await fs.readFile(directoryPath);
+              res.writeHead(200, { 'Content-Type': mimeTypes });
+              res.render('index', imageBuffer);
+
+              // res.render('file_view', { caminho: decodedReq, conteudo: directoryPath, tipo: 'image', anterior: parentPath});
+              // res.redirect('/imagem')
+              // res.sendFile(directoryPath);
+
+            } else if (mimeTypes.startsWith('video')) {
               // Se for um vídeo
               res.render('file_view', { caminho: decodedReq, conteudo: directoryPath, tipo: 'video', anterior: parentPath });
-
-          } else {
+            } else {
               // Se for outro tipo de arquivo (como binários)
               res.render('file_view', { caminho: decodedReq, conteudo: 'Este tipo de arquivo não pode ser aberto'})
-          }
+            }
 
         }
         

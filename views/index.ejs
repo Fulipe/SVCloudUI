@@ -6,11 +6,38 @@
     <title>filipe-cloud</title>
     <link rel="stylesheet" type="text/css" href="styles/styles.css" />
     <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <style>
+        /* Estilos para o modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.7);
+        }
+        .modal-content {
+            margin: 15% auto;
+            display: block;
+            max-width: 70%;
+        }
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 25px;
+            color: white;
+            font-size: 35px;
+            font-weight: bold;
+        }
+    </style>
 
 </head>
 <body>
     <%- include('shared/header') -%>
-    <a href="<%= anterior %>">
+    <a href="..">
         <button type="button" class="btn btn-secondary"><b>&larr; Anterior</b></button>
     </a>
     <h3><%= caminho %></h3>
@@ -35,7 +62,7 @@
                         <div class="card " style="background-color: rgb(123, 190, 217);">
                             <div class="card-body">
                                 <h5 class="card-title"><%= formattedItems[i].name %></h5>
-                                <a href="<%=formattedItems[i].name%>" class="btn btn-primary">Ir >>></a>
+                                <a href="<%= formattedItems[i].name %>" class="btn btn-primary file-link">Ir >>></a>
                             </div>
                         </div>
                     </div>                
@@ -43,6 +70,44 @@
             <% } %>
         <%  } %>
     </div>
+
+    <div id="imageModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+
+    <script>
+        document.querySelectorAll('.file-link').forEach(link =>{
+            link.addEventListener('click', function(e){
+                e.preventDefault();
+
+                const fileUrl = this.getAttribute('href');
+                const mimeType = this.dataset.mimeType;
+
+                if(mimeType && mimeType.startsWith('image')){
+                    const modal = document.getElementById('imageModal');
+                    const modalImg = document.getElementById('modalImage');
+                    console.log('Ola')
+                    modalImg.src = fileUrl;
+                    console.log('Olé')
+                    modal.style.display = "block";
+
+                    //fechar modal
+                    modal.onclick = function(){
+                        modal.style.display = "none";
+                    };
+
+                } else {
+                    // Se não for uma imagem, navegar para o arquivo normalmente, carrega na consola o tipo de ficheiro
+                    console.log(mimeType)
+                    console.log('Não deu')
+                    window.location.href = fileUrl;
+
+                    //fazer para casos de video
+                }
+            })
+        })
+    </script>
         
 </body>
 </html> 
