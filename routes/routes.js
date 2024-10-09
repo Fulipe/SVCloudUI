@@ -3,9 +3,31 @@ const express = require('express');
 const fileController = require('../controllers/fileController');
 const router = express.Router();
 
+router.get('/', fileController.listroot)
+router.get('/forward', fileController.goforward);
+router.get('/back', fileController.goback);
 router.get('/:directory?', fileController.listfiles);
 
 module.exports = router;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /////////////////////////////////////////////////////////////////~
 

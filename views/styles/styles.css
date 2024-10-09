@@ -12,3 +12,36 @@ body{
     position: absolute;
     padding: 10px;
 }
+
+.navCommands{
+    vertical-align: middle;
+}
+
+.navCommands ul{
+    padding: 0;
+    margin: 0;
+    display: flex;
+    list-style: none;
+    list-style-position: inherit;
+}
+
+#navBtn{
+    background-color: rgb(227, 227, 227);
+    margin: 0 2px;
+    border-width: 1px;
+    border-color: lightgrey;
+}
+
+#navBtn:hover{
+    background-color: rgb(203, 203, 203);
+    margin: 0 2px;
+    border-width: 1px;
+    border-color: lightgrey;
+}
+
+#navBtn:active{
+    background-color: rgb(128, 126, 126);
+    margin: 0 2px;
+    border-width: 1px;
+    border-color: lightgrey;
+}

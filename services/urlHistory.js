@@ -1,5 +1,3 @@
-const path = require('path');
-
 class UrlHistory {
     constructor() {
         this.history = ['data'];
@@ -12,55 +10,70 @@ class UrlHistory {
     addPath(url){
         //adicionar um caminho, depois, de se ter retrocedido. Apaga diretorios futuros antes navegados
         if (this.currentIndex < this.history.length - 1) {
-            this.history.slice(0, this.currentIndex + 1)
 
-        //se já houver 1 link no historico, juntar url novo ao parent para criar caminho para subdiretorio
-        } else if(this.currentIndex > 0){
+            //substitui registo de historico por um atualizado sem links futuros
+            this.history = this.history.slice(0, this.currentIndex + 1)
+            
             let lastUrl = this.history.slice(-1).toString();
-            let urlToPush = path.join(lastUrl, url)
+            let urlToPush = lastUrl.concat(url) 
 
             this.history.push(urlToPush)
             this.currentIndex++
 
-            console.log(this.history)
-            console.log("Disparou else if: " + this.currentIndex)
+            // console.log("Disparou addPath if " + this.currentIndex)
+            // console.log(this.history)
 
-        //usado para iniciar o primeiro url
+        //se já houver 1 link no historico, juntar url novo ao parent para criar caminho para subdiretorio
         } else {
-            // let lastUrl = this.history.slice(-1).toString();
-            // let urlToPush = lastUrl.concat(url)
+            let lastUrl = this.history.slice(-1).toString();
+            let urlToPush = lastUrl.concat(url) 
 
-            this.history.push(url)
+            this.history.push(urlToPush)
             this.currentIndex++
-            
 
-            console.log(this.history)
-            console.log("Disparou else: " + this.currentIndex)
+            // console.log("Disparou else if: " + this.currentIndex)
+            // console.log(this.history)
         }
     }
 
     goBack(){
         if (this.currentIndex > 0) {
             this.currentIndex--;
-            return this.history[this.currentIndex].toString()
+
+            // console.log("Disparou back: " + this.currentIndex)
+            // console.log(this.history)
+
         } else return null
     }
     
     goForward(){
         if (this.currentIndex < this.history.length -1) {
             this.currentIndex++;
-            return this.history[this.currentIndex].toString()
+
+            // console.log("Disparou forward: " + this.currentIndex)
+            // console.log(this.history)
+
         } else return null
     }
 
     getCurrentPath() {
         if (this.currentIndex >= 0 && this.currentIndex < this.history.length) {
-          return this.history[this.currentIndex].toString();
+            const dirAtual = this.history[this.currentIndex].toString();
+
+            // console.log("CurrentPath: " + dirAtual + " " + this.currentIndex)
+
+          return dirAtual
+
         } else {
-            console.log("disparou else currentPath")
+            // console.log("disparou else currentPath")
             return '/';
         }
     }
+
+    getRoot(){
+        this.currentIndex = 0;
+    }
+
 }
 
 module.exports = UrlHistory
