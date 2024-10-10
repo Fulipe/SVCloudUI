@@ -69,3 +69,14 @@ exports.goforward = (req, res) => {
         console.error(err)
     }
 }
+
+exports.mkdir = (req,res) => {
+    try{
+        res.render('mkdir');
+
+    } catch (err) {
+        res.status(500).send("Erro a ir para criação de dir")
+        console.error(err)
+    }
+
+}

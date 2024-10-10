@@ -6,6 +6,7 @@ const router = express.Router();
 router.get('/', fileController.listroot)
 router.get('/forward', fileController.goforward);
 router.get('/back', fileController.goback);
+router.get('/createdir', fileController.mkdir);
 router.get('/:directory?', fileController.listfiles);
 
 module.exports = router;

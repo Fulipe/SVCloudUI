@@ -25,23 +25,29 @@ body{
     list-style-position: inherit;
 }
 
+.navCommands li{
+    margin: 0 2px;
+}
+
+#mkdirBtn{
+    margin-left: 10px;
+    padding: 6px 14px;
+}
+
 #navBtn{
     background-color: rgb(237, 237, 237);
-    margin: 0 2px;
     border-width: 1px;
     border-color: lightgrey;
 }
 
 #navBtn:hover{
     background-color: rgb(203, 203, 203);
-    margin: 0 2px;
     border-width: 1px;
     border-color: lightgrey;
 }
 
 #navBtn:active{
     background-color: rgb(128, 126, 126);
-    margin: 0 2px;
     border-width: 1px;
     border-color: lightgrey;
 }

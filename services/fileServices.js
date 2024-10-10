@@ -24,6 +24,16 @@ class FileService{
             isDirectory: fs.lstatSync(path.join(dir, file)).isDirectory()
         }));   
     }
+    //mkDir
+    mkdir(){
+
+        // const dir = fs.mkdir()
+
+    }
+
+    //editDir
+
+    //rmDir
 }
 
 module.exports = FileService
