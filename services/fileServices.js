@@ -1,9 +1,16 @@
 const fs = require('fs');
 const path = require('path');
+const UrlHistory = require('./urlHistory.js');
+const urlHistory = new UrlHistory();
 
 class FileService{
     constructor(/*baseDir*/){
         // this.baseDir = baseDir;
+    }
+    checkExistsDir(newdir, dirAtual){
+        const newDir = path.join(dirAtual, newdir)
+        console.log(newDir)
+        return fs.existsSync(newDir)
     }
 
     //metodo recebe valor de req.params no controller
@@ -25,9 +32,12 @@ class FileService{
         }));   
     }
     //mkDir
-    mkdir(){
+    mkdir(name, dirAtual){
+        const newDir = path.join(dirAtual, name)
 
-        // const dir = fs.mkdir()
+        fs.mkdir(newDir, (err)=>{
+            if(err) throw err;
+        })
 
     }
 

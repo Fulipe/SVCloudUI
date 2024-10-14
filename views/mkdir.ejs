@@ -6,12 +6,22 @@
     <title>filipe-cloud</title>
     <link rel="stylesheet" type="text/css" href="styles/styles.css" />
     <link rel="stylesheet" href="/css/bootstrap.min.css" />
-
 </head>
 <body>
     <%- include('shared/header') -%>
-
     
+    <h2>Criar diretório em: <%= dirAtual %></h2>
+    
+    <form action="" method="post">
+        <div class="row g-3">
+            <div class="col-sm-4">
+                <input name="nome" type="text" class="form-control" placeholder="Escreve nome do novo diretório">
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-success"><b>Criar diretório</b></button>
+            </div>
+        </div>
+    </form>
     
 </body>
 </html>

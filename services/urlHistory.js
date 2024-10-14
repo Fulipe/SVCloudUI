@@ -21,7 +21,7 @@ class UrlHistory {
             this.currentIndex++
 
             // console.log("Disparou addPath if " + this.currentIndex)
-            // console.log(this.history)
+            console.log(this.history)
 
         //se já houver 1 link no historico, juntar url novo ao parent para criar caminho para subdiretorio
         } else {
@@ -32,7 +32,7 @@ class UrlHistory {
             this.currentIndex++
 
             // console.log("Disparou else if: " + this.currentIndex)
-            // console.log(this.history)
+            console.log(this.history)
         }
     }
 
@@ -41,7 +41,7 @@ class UrlHistory {
             this.currentIndex--;
 
             // console.log("Disparou back: " + this.currentIndex)
-            // console.log(this.history)
+            console.log(this.history)
 
         } else return null
     }
@@ -51,7 +51,7 @@ class UrlHistory {
             this.currentIndex++;
 
             // console.log("Disparou forward: " + this.currentIndex)
-            // console.log(this.history)
+            console.log(this.history)
 
         } else return null
     }
