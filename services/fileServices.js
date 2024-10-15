@@ -7,15 +7,16 @@ class FileService{
     constructor(/*baseDir*/){
         // this.baseDir = baseDir;
     }
+    //Verifica se existe diretório
     checkExistsDir(newdir, dirAtual){
         const newDir = path.join(dirAtual, newdir)
+
         console.log(newDir)
         return fs.existsSync(newDir)
     }
 
     //metodo recebe valor de req.params no controller
     listFiles(dir = ""){
-
         console.log("PATH: " + dir)
 
         //como o diretorio vem como array, .map() e atribui os valores a cada diretorio consoante embaixo
@@ -31,8 +32,9 @@ class FileService{
             isDirectory: fs.lstatSync(path.join(dir, file)).isDirectory()
         }));   
     }
-    //mkDir
+
     mkdir(name, dirAtual){
+        //constrói path, até ao dir que vai ser criado
         const newDir = path.join(dirAtual, name)
 
         fs.mkdir(newDir, (err)=>{
@@ -40,10 +42,18 @@ class FileService{
         })
 
     }
+    rmDir(params, dirAtual){
+        //constrói path, até ao dir que vai ser eliminado
+        const dirDeleted = path.join(dirAtual, params)
+
+        //elimina recursivamente, para que seja possivel eliminar diretorios com ficheiros
+        fs.rmSync(dirDeleted, {recursive: true}, (err)=>{
+            if(err) throw err;
+        })
+    }
 
     //editDir
 
-    //rmDir
 }
 
 module.exports = FileService

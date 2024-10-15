@@ -51,3 +51,7 @@ body{
     border-width: 1px;
     border-color: lightgrey;
 }
+
+#delBtn, #editBtn{
+    border-radius: 100%;
+}

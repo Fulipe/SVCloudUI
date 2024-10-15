@@ -1,14 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>filipe-cloud</title>
-    <link rel="stylesheet" type="text/css" href="styles/styles.css" />
-    <link rel="stylesheet" href="/css/bootstrap.min.css" />
 
-</head>
-<body>
+    <body>
     <%- include('shared/header') -%>
 
     <div class="row">
@@ -24,6 +17,9 @@
                             <div class="card-body">
                                 <h5 class="card-title"><%= file.name %></h5>
                                 <a href="<%=file.name%>" class="btn btn-primary">Ir >>></a>
+
+                                <a href="/delete/<%= file.name %>" class="btn btn-danger" id="delBtn"><i class="bi bi-trash-fill"></i></a>
+                                <a href="/edit/<%= file.name %>" class="btn btn-secondary" id="delBtn"><i class="bi bi-pencil-fill"></i></a>
                             </div>
                         </div>
                     </div>                    
@@ -33,6 +29,9 @@
                             <div class="card-body">
                                 <h5 class="card-title"><%= file.name %></h5>
                                 <a href="<%=file.name%>" class="btn btn-primary">Ir >>></a>
+
+                                <a href="/delete/<%= file.name %>" class="btn btn-danger" id="delBtn"><i class="bi bi-trash-fill"></i></a>
+                                <a href="/edit/<%= file.name %>" class="btn btn-secondary" id="editBtn"><i class="bi bi-pencil-fill"></i></a>
                             </div>
                         </div>
                     </div>     
@@ -42,5 +41,15 @@
         <% } %>
         
     </div>
+    <script>
+        // function alerta(dirDel){
+        //     document.getElementById('delBtn').addEventListener('click', ()=>{
+        //         if(dirDel.length){
+        //             window.alert('O diretório não está vazio quer continuar?')
+        
+        //         }
+        //     })
+        // }
+    </script>
 </body>
 </html> 

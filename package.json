@@ -3,6 +3,7 @@
 	"main": "mainApp.js",
 	"dependencies": {
 		"bootstrap": "5.3.3",
+		"bootstrap-icons": "^1.11.3",
 		"ejs": "^3.1.10",
 		"express": "^4.19.2",
 		"mime-types": "^2.1.35",

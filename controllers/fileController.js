@@ -113,15 +113,18 @@ exports.mkdirPost = (req,res) =>{
             }
         }
 
-        // // urlHistory.addPath(decodeURIComponent(req.body.name))
-        // const dirAtual = urlHistory.getCurrentPath()
-        // // const emptyDirMsg = "Diretorio Vazio"
-        // const newDir = path.join(dirAtual, req.body.nome)
-
     } catch (err) {
         res.status(500).send("Erro a ir para criação de dir")
         console.error(err)
     }
     
 
+}
+
+exports.rmdir = (req,res) =>{
+    // const dirAtual = urlHistory.getCurrentPath()
+
+
+    // res.render('index')
+    console.log(path.join(dirAtual, req.params.directory))
 }
