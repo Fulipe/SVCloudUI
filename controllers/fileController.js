@@ -1,7 +1,6 @@
 const path = require('path');
 const FileService = require('../services/fileServices.js');
 const UrlHistory = require('../services/urlHistory.js');
-const { dir } = require('console');
 const urlHistory = new UrlHistory();
 const fileService = new FileService()
 
@@ -10,11 +9,11 @@ exports.listroot = (req, res) => {
         //if para que checkar se já há um dir no historico (haverá sempre porque root é carregada diretamente)
 
         urlHistory.getRoot()
-        
-        const files = fileService.listFiles(urlHistory.getCurrentPath());
+        const dirAtual = urlHistory.getCurrentPath()
+        const files = fileService.listFiles(dirAtual);
     
-        console.log("Caminho atual: " + urlHistory.getCurrentPath())
-        res.render('index', { files });
+        console.log("Caminho atual: " + dirAtual)
+        res.render('index', { files, dirAtual });
 
     } catch (err){
         res.status(500).send("Erro a listar os ficheiros")
@@ -26,11 +25,11 @@ exports.listfiles = (req, res) => {
     try{
         //if para que checkar se já há um dir no historico (haverá sempre porque root é carregada diretamente)
         urlHistory.addPath(decodeURIComponent(req.path)); 
-        const dir = urlHistory.getCurrentPath();
+        const dirAtual = urlHistory.getCurrentPath();
 
         const emptyDirMsg = "Diretorio Vazio"
-        const files = fileService.listFiles(dir || '');
-        res.render('index', { files, emptyDirMsg });
+        const files = fileService.listFiles(dirAtual || '');
+        res.render('index', { files, emptyDirMsg, dirAtual });
 
     } catch (err){
         res.status(500).send("Erro a listar os ficheiros")
@@ -41,13 +40,13 @@ exports.listfiles = (req, res) => {
 exports.goback = (req,res)=>{
     try{
         urlHistory.goBack();
-        const dir = urlHistory.getCurrentPath();
+        const dirAtual = urlHistory.getCurrentPath();
 
         const emptyDirMsg = "Diretorio Vazio"
 
-        const files = fileService.listFiles(dir || '');
-        console.log(dir)
-        res.render('index', {files, emptyDirMsg});
+        const files = fileService.listFiles(dirAtual || '');
+        console.log(dirAtual)
+        res.render('index', {files, emptyDirMsg, dirAtual});
 
     } catch (err){
         res.status(500).send("Erro a listar os ficheiros [exports.goback]")
@@ -58,13 +57,13 @@ exports.goback = (req,res)=>{
 exports.goforward = (req, res) => {
     try{
         urlHistory.goForward()
-        const dir = urlHistory.getCurrentPath();
+        const dirAtual = urlHistory.getCurrentPath();
 
         const emptyDirMsg = "Diretorio Vazio"
         
-        const files = fileService.listFiles(dir || '');
-        console.log(dir)
-        res.render('index', { files, emptyDirMsg });
+        const files = fileService.listFiles(dirAtual || '');
+        console.log(dirAtual)
+        res.render('index', { files, emptyDirMsg, dirAtual });
 
     } catch (err){
         res.status(500).send("Erro a listar os ficheiros [exports.goforward]")
@@ -104,10 +103,10 @@ exports.mkdirPost = (req,res) =>{
                 const emptyDirMsg = "Diretorio Vazio"
 
                 console.log(dir)
-                res.render('index', { files, emptyDirMsg });
+                res.render('index', { files, emptyDirMsg, dirAtual:dir });
 
             } catch (error) {
-                res.status(500).send("Erro a criar diretorio")
+                res.status(500).send("Erro a criar diretorio ou mostrar diretorio")
                 console.error(error)
                 
             }

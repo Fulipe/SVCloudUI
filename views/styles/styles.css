@@ -52,6 +52,34 @@ body{
     border-color: lightgrey;
 }
 
-#delBtn, #editBtn{
+#editBtn, #deleteBtn{
     border-radius: 100%;
 }
+
+/* Estilos para a caixa de diálogo */
+dialog::backdrop{
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+dialog{
+    border-left: 8px solid #DC3545 !important;
+    border-right: none;
+    border-top: none;
+    border-bottom: none;
+    border-radius: .5rem;
+    box-shadow: 0 0 1em rgba(0, 0, 0, 0.3);
+}
+dialog h5{
+    position: static;
+}
+
+dialog #confirmDelete{
+    margin-right: 12px;
+}
+
+@media (max-width: 575px){
+    dialog #confirmDelete{
+        margin-right: 0;
+    }
+}
+/*-----------------------------------------*/

@@ -38,6 +38,7 @@ class FileService{
         const newDir = path.join(dirAtual, name)
 
         fs.mkdir(newDir, (err)=>{
+            console.log("Diretorio criado " + newDir)
             if(err) throw err;
         })
 
