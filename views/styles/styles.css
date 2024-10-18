@@ -52,7 +52,7 @@ body{
     border-color: lightgrey;
 }
 
-#editBtn, #deleteBtn{
+#editBtn, .del-btn{
     border-radius: 100%;
 }
 
@@ -68,6 +68,7 @@ dialog{
     border-bottom: none;
     border-radius: .5rem;
     box-shadow: 0 0 1em rgba(0, 0, 0, 0.3);
+    padding: 1em 0;
 }
 dialog h5{
     position: static;
@@ -78,6 +79,9 @@ dialog #confirmDelete{
 }
 
 @media (max-width: 575px){
+    dialog{
+        padding: 1em;
+    }
     dialog #confirmDelete{
         margin-right: 0;
     }

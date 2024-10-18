@@ -1,7 +1,5 @@
 const fs = require('fs');
 const path = require('path');
-const UrlHistory = require('./urlHistory.js');
-const urlHistory = new UrlHistory();
 
 class FileService{
     constructor(/*baseDir*/){
@@ -49,6 +47,7 @@ class FileService{
 
         //elimina recursivamente, para que seja possivel eliminar diretorios com ficheiros
         fs.rmSync(dirDeleted, {recursive: true}, (err)=>{
+            console.log("Diretorio apagado " + dirDeleted)
             if(err) throw err;
         })
     }

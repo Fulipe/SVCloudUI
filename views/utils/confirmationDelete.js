@@ -14,16 +14,29 @@ deleteButtons.forEach(button => {
         // console.log("A tentar eliminar:", fileNameToDelete); // Exibe o nome do ficheiro a ser eliminado
         
         nameDir.innerHTML = '/' + fileNameToDelete;
-        confirmDialog.showModal(); // Exibe o diálogo de confirmação
+        confirmDialog.showModal(); // Exibe o Dialog de confirmação
     });
 })
 
 cancelDelete.addEventListener('click', function(){
-    confirmDialog.close()
+    confirmDialog.close() //fecha Dialog ao clicar no botao cancelar
 })
 
 closeCross.addEventListener('click', function(){
-    confirmDialog.close()
+    confirmDialog.close() //fecha Dialog ao clicar na cruz
 })
 
-// confirmDeleteBtn
+confirmDelete.addEventListener('click', function(){
+    fetch('/delete', {
+        method: 'POST',
+        body: JSON.stringify({path: fileNameToDelete}),
+        headers: {'Content-Type': 'application/json'}
+    }).then(() => {
+        location.reload()
+    })
+    .catch(error => {
+        console.error('Erro:', error);
+    });
+    confirmDialog.close()
+    
+})

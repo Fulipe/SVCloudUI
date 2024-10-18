@@ -1,4 +1,3 @@
-const path = require('path');
 const FileService = require('../services/fileServices.js');
 const UrlHistory = require('../services/urlHistory.js');
 const urlHistory = new UrlHistory();
@@ -121,9 +120,18 @@ exports.mkdirPost = (req,res) =>{
 }
 
 exports.rmdir = (req,res) =>{
-    // const dirAtual = urlHistory.getCurrentPath()
+    try {
+        const dirAtual = urlHistory.getCurrentPath()    
+        fileService.rmDir(req.body.path, dirAtual)
+        
+        const files = fileService.listFiles(dirAtual || '');
+        const emptyDirMsg = "Diretorio Vazio"
 
-
-    // res.render('index')
-    console.log(path.join(dirAtual, req.params.directory))
+        console.log(dirAtual)
+        res.render('index', { files, emptyDirMsg, dirAtual });
+        
+    } catch (error) {
+        res.status(500).send("Erro a apagar diretorio")
+        console.error(error)
+    }
 }

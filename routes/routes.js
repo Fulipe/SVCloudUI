@@ -12,7 +12,7 @@ router.get('/back', fileController.goback);
 router.get('/createdir', fileController.mkdir);
 router.post('/createdir', fileController.mkdirPost);
 
-router.post('/delete/:directory?', fileController.rmdir)
+router.post('/delete', fileController.rmdir)
 
 router.get('/:directory?', fileController.listfiles);
 
