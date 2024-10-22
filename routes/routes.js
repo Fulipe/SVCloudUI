@@ -14,6 +14,7 @@ router.post('/createdir', fileController.mkdirPost);
 
 router.post('/delete', fileController.rmdir)
 
+router.get('/folders/:directory?', fileController.listfiles);
 router.get('/:directory?', fileController.listfiles);
 
 module.exports = router;

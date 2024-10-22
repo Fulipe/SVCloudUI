@@ -34,7 +34,7 @@
                             <div class="card " style="background-color: rgb(243, 215, 146);">
                                 <div class="card-body">
                                     <h5 class="card-title"><%= file.name %></h5>
-                                    <a href="<%=file.name%>" class="btn btn-primary">Ir >>></a>
+                                    <a href="/folders/<%=file.name%>" class="btn btn-primary">Ir >>></a>
                                     
                                     <button class="del-btn btn btn-danger" data-file-name="<%= file.name %>"><i class="bi bi-trash-fill"></i></button>
                                     <a href="/edit/<%= file.name %>" class="btn btn-secondary" id="editBtn"><i class="bi bi-pencil-fill"></i></a>
@@ -46,7 +46,7 @@
                                 <div class="card " style="background-color: rgb(123, 190, 217);">
                                     <div class="card-body">
                                         <h5 class="card-title"><%= file.name %></h5>
-                                        <a href="<%=file.name%>" class="btn btn-primary">Ir >>></a>
+                                        <a href="/files/<%=file.name%>" class="btn btn-primary">Ir >>></a>
                                         
                                         <button class="btn btn-danger del-btn" data-file-name="<%= file.name %>"><i class="bi bi-trash-fill"></i></button>
                                         <a href="/edit/<%= file.name %>" class="btn btn-secondary" id="editBtn"><i class="bi bi-pencil-fill"></i></a>
@@ -58,7 +58,7 @@
                 <% }); %>
             <% } %>                     
     </div>  
-    <script src="utils/confirmationDelete.js">
+    <script src="../utils/confirmationDelete.js">
     </script>
 </body>
 </html> 

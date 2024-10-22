@@ -5,6 +5,7 @@ class FileService{
     constructor(/*baseDir*/){
         // this.baseDir = baseDir;
     }
+    
     //Verifica se existe diretório
     checkExistsDir(newdir, dirAtual){
         const newDir = path.join(dirAtual, newdir)
@@ -39,14 +40,14 @@ class FileService{
             console.log("Diretorio criado " + newDir)
             if(err) throw err;
         })
-
     }
+
     rmDir(params, dirAtual){
         //constrói path, até ao dir que vai ser eliminado
         const dirDeleted = path.join(dirAtual, params)
 
         //elimina recursivamente, para que seja possivel eliminar diretorios com ficheiros
-        fs.rmSync(dirDeleted, {recursive: true}, (err)=>{
+        fs.rm(dirDeleted, {recursive: true}, (err)=>{
             console.log("Diretorio apagado " + dirDeleted)
             if(err) throw err;
         })

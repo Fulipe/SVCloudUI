@@ -8,11 +8,12 @@ exports.listroot = (req, res) => {
         //if para que checkar se já há um dir no historico (haverá sempre porque root é carregada diretamente)
 
         urlHistory.getRoot()
+        const emptyDirMsg = "Diretorio Vazio"
         const dirAtual = urlHistory.getCurrentPath()
         const files = fileService.listFiles(dirAtual);
     
         console.log("Caminho atual: " + dirAtual)
-        res.render('index', { files, dirAtual });
+        res.render('index', { files, emptyDirMsg, dirAtual });
 
     } catch (err){
         res.status(500).send("Erro a listar os ficheiros")
@@ -21,18 +22,38 @@ exports.listroot = (req, res) => {
 }
 
 exports.listfiles = (req, res) => {
-    try{
-        //if para que checkar se já há um dir no historico (haverá sempre porque root é carregada diretamente)
-        urlHistory.addPath(decodeURIComponent(req.path)); 
-        const dirAtual = urlHistory.getCurrentPath();
 
-        const emptyDirMsg = "Diretorio Vazio"
-        const files = fileService.listFiles(dirAtual || '');
-        res.render('index', { files, emptyDirMsg, dirAtual });
+    //[IN DEV] 
+    //  -> caso haja um subdiretorio com o mm nome do diretorio parent (como no exemplo abaixo), não dá acesso e apenas mostra o parent.
+    const dirAtual = urlHistory.getCurrentPath();
+    const dirSplit = dirAtual.split("/");
+    const lastDir = "/" + dirSplit.slice(-1).toString();
 
-    } catch (err){
-        res.status(500).send("Erro a listar os ficheiros")
-        console.error(err)
+    //Para quando se dá refresh na página evita-se que o dir incoming não seja adicionado ao url e assim não tentando buscar dirs que não existem
+    //Ex: data/dir/dir
+    if (req.params.directory == lastDir) {
+        try {
+            const emptyDirMsg = "Diretorio Vazio"
+            const files = fileService.listFiles(dirAtual || '');
+            res.render('index', { files, emptyDirMsg, dirAtual });
+            
+        } catch (error) {
+            res.status(500).send("Erro a dar refresh")
+            console.error(error)
+        }
+    
+    } else{
+        try {
+            urlHistory.addPath('/' + decodeURIComponent(req.params.directory)); 
+            const dirAtual = urlHistory.getCurrentPath();
+            const emptyDirMsg = "Diretorio Vazio"
+            const files = fileService.listFiles(dirAtual || '');
+            res.render('index', { files, emptyDirMsg, dirAtual });
+            
+        } catch (error) {
+            res.status(500).send("Erro a listar os ficheiros")
+            console.error(error)
+        }
     }
 }; 
 
