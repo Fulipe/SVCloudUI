@@ -1,48 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>filipe-cloud</title>
-    <link rel="stylesheet" type="text/css" href="styles/styles.css" />
-    <link rel="stylesheet" href="/css/bootstrap.min.css" />
-    <script src="../tools/tools.js"></script>
-
-</head>
+<%- include('shared/head') %>
 <body>
-    <%- include('shared/header') -%>
-
+    <%- include('shared/navbar') -%>    
+    
+    <!-- Caixa de diálogo para confirmar a eliminação -->
+    <dialog id="confirmDelDialog">
+        <div class="container text-center">
+            <div class="row justify-content-between">
+                <h5 class="col-sm-4">Eliminar Diretório</h5>
+                <button class="btn col-sm-1" id="closeCross"><i class="bi bi-x-lg"></i></button>
+            </div>
+            <hr>
+            <div class="row">
+                <p>Tens a certeza de que queres eliminar o diretório <b><span id="nameDir"></span></b> e todo o seu conteúdo?</p>
+            </div>
+            <div class="row justify-content-end text-center">
+                <button class="btn btn-secondary col-sm-2" id="cancelDelete">Cancelar</button>
+                <button class="btn btn-danger col-sm-2 ms-1" id="confirmDelete"><i class="bi bi-trash-fill"></i>Apagar</button>
+            </div>
+        </div>
+    </dialog>
+        
     <div class="row">
         <% if (files.length == 0) {%>
             <div class="emptydirmsg text-center">
                 <h3 class="text-bg-danger"><%= emptyDirMsg %></h3>
             </div>
-        <% } else { %>
-            <% files.forEach(file => { %>
-                <% if (file.isDirectory) { %>
-                    <div class="col-sm-4 mb-3 mb-sm-0">
-                        <div class="card " style="background-color: rgb(243, 215, 146);">
-                            <div class="card-body">
-                                <h5 class="card-title"><%= file.name %></h5>
-                                <a href="<%=file.name%>" class="btn btn-primary">Ir >>></a>
+            <% } else { %>
+                <% files.forEach(file => { %>
+                    <% if (file.isDirectory) { %>
+                        <div class="col-sm-4 mb-3 mb-sm-0">
+                            <div class="card " style="background-color: rgb(243, 215, 146);">
+                                <div class="card-body">
+                                    <h5 class="card-title"><%= file.name %></h5>
+                                    <a href="/folders/<%=file.name%>" class="btn btn-primary">Ir >>></a>
+                                    
+                                    <button class="del-btn btn btn-danger" data-file-name="<%= file.name %>"><i class="bi bi-trash-fill"></i></button>
+                                    <a href="/edit/<%= file.name %>" class="btn btn-secondary" id="editBtn"><i class="bi bi-pencil-fill"></i></a>
+                                </div>
                             </div>
-                        </div>
-                    </div>                    
-                <% } else { %>
-                    <div class="col-sm-4 mb-3 mb-sm-0">
-                        <div class="card " style="background-color: rgb(123, 190, 217);">
-                            <div class="card-body">
-                                <h5 class="card-title"><%= file.name %></h5>
-                                <a href="<%=file.name%>" class="btn btn-primary">Ir >>></a>
-                            </div>
-                        </div>
-                    </div>     
-                
-                <% } %>
-            <% }); %>
-        <% } %>
-        
-    </div>
+                        </div>                    
+                        <% } else { %>
+                            <div class="col-sm-4 mb-3 mb-sm-0">
+                                <div class="card " style="background-color: rgb(123, 190, 217);">
+                                    <div class="card-body">
+                                        <h5 class="card-title"><%= file.name %></h5>
+                                        <a href="/files/<%=file.name%>" class="btn btn-primary">Ir >>></a>
+                                        
+                                        <button class="btn btn-danger del-btn" data-file-name="<%= file.name %>"><i class="bi bi-trash-fill"></i></button>
+                                        <a href="/edit/<%= file.name %>" class="btn btn-secondary" id="editBtn"><i class="bi bi-pencil-fill"></i></a>
+                                    </div>
+                                </div>
+                            </div>     
+                            
+                        <% } %>
+                <% }); %>
+            <% } %>                     
+    </div>  
+    <script src="../utils/confirmationDelete.js">
+    </script>
 </body>
-   
 </html> 

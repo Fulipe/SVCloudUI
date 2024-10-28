@@ -4,8 +4,17 @@ const fileController = require('../controllers/fileController');
 const router = express.Router();
 
 router.get('/', fileController.listroot)
+
 router.get('/forward', fileController.goforward);
+
 router.get('/back', fileController.goback);
+
+router.get('/createdir', fileController.mkdir);
+router.post('/createdir', fileController.mkdirPost);
+
+router.post('/delete', fileController.rmdir)
+
+router.get('/folders/:directory?', fileController.listfiles);
 router.get('/:directory?', fileController.listfiles);
 
 module.exports = router;
