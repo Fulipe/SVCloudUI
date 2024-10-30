@@ -48,6 +48,8 @@ exports.listfiles = (req, res) => {
             const dirAtual = urlHistory.getCurrentPath();
             const emptyDirMsg = "Diretorio Vazio"
             const files = fileService.listFiles(dirAtual || '');
+
+            console.log(files)
             res.render('index', { files, emptyDirMsg, dirAtual });
             
         } catch (error) {
@@ -144,11 +146,13 @@ exports.rmdir = (req,res) =>{
     try {
         const dirAtual = urlHistory.getCurrentPath()    
         fileService.rmDir(req.body.path, dirAtual)
+        urlHistory.pathDestroyed()
         
-        const files = fileService.listFiles(dirAtual || '');
+        const dirAnterior = urlHistory.getCurrentPath()
+        const files = fileService.listFiles(dirAnterior || '');
         const emptyDirMsg = "Diretorio Vazio"
 
-        console.log(dirAtual)
+        console.log(dirAnterior)
         res.render('index', { files, emptyDirMsg, dirAtual });
         
     } catch (error) {

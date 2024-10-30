@@ -34,19 +34,19 @@ body{
     padding: 6px 14px;
 }
 
-#navBtn{
+#goForward, #goBack{
     background-color: rgb(237, 237, 237);
     border-width: 1px;
     border-color: lightgrey;
 }
 
-#navBtn:hover{
+#goForward:hover, #goBack:hover{
     background-color: rgb(203, 203, 203);
     border-width: 1px;
     border-color: lightgrey;
 }
 
-#navBtn:active{
+#goForward:active, #goBack:active{
     background-color: rgb(128, 126, 126);
     border-width: 1px;
     border-color: lightgrey;
