@@ -8,6 +8,9 @@ class UrlHistory {
     }
 
     addPath(url){
+        console.log(' ') //para separar processos com o fim de dar debug
+    
+
         //adicionar um caminho, depois, de se ter retrocedido. Apaga diretorios futuros antes navegados
         if (this.currentIndex < this.history.length - 1) {
 
@@ -32,7 +35,7 @@ class UrlHistory {
             this.currentIndex++
 
             // console.log("Disparou else if: " + this.currentIndex)
-            console.log(this.history)
+            console.log("Historico: ", this.history)
         }
     }
 

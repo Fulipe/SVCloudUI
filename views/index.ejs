@@ -35,6 +35,7 @@
                                 <div class="card-body">
                                     <h5 class="card-title"><%= file.name %></h5>
                                     <a href="/folders/<%=file.name%>" class="btn btn-primary">Ir >>></a>
+                                    <!-- <button class="ir-btn btn btn-primary" dirName= "<%= file.name %>" value="false">Ir >>></button> -->
                                     
                                     <button class="del-btn btn btn-danger" data-file-name="<%= file.name %>"><i class="bi bi-trash-fill"></i></button>
                                     <a href="/edit/<%= file.name %>" class="btn btn-secondary" id="editBtn"><i class="bi bi-pencil-fill"></i></a>

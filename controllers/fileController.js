@@ -21,42 +21,23 @@ exports.listroot = (req, res) => {
     }
 }
 
-exports.listfiles = (req, res) => {
+exports.listfolders = (req, res) => {
+    try {
+        
+        urlHistory.addPath('/' + decodeURIComponent(req.params.directory)); 
+        const dirAtual = urlHistory.getCurrentPath();
+        const emptyDirMsg = "Diretorio Vazio"
+        const files = fileService.listFiles(dirAtual || '');
 
-    //[IN DEV] 
-    //  -> caso haja um subdiretorio com o mm nome do diretorio parent (como no exemplo abaixo), não dá acesso e apenas mostra o parent.
-    const dirAtual = urlHistory.getCurrentPath();
-    const dirSplit = dirAtual.split("/");
-    const lastDir = "/" + dirSplit.slice(-1).toString();
-
-    //Para quando se dá refresh na página evita-se que o dir incoming não seja adicionado ao url e assim não tentando buscar dirs que não existem
-    //Ex: data/dir/dir
-    if (req.params.directory == lastDir) {
-        try {
-            const emptyDirMsg = "Diretorio Vazio"
-            const files = fileService.listFiles(dirAtual || '');
-            res.render('index', { files, emptyDirMsg, dirAtual });
-            
-        } catch (error) {
-            res.status(500).send("Erro a dar refresh")
-            console.error(error)
-        }
-    
-    } else{
-        try {
-            urlHistory.addPath('/' + decodeURIComponent(req.params.directory)); 
-            const dirAtual = urlHistory.getCurrentPath();
-            const emptyDirMsg = "Diretorio Vazio"
-            const files = fileService.listFiles(dirAtual || '');
-
-            console.log(files)
-            res.render('index', { files, emptyDirMsg, dirAtual });
-            
-        } catch (error) {
-            res.status(500).send("Erro a listar os ficheiros")
-            console.error(error)
-        }
+        console.log("Ficheiros do dir: ", files)
+        console.log("Caminho atual:", dirAtual)
+        res.render('index', { files, emptyDirMsg, dirAtual });
+        
+    } catch (error) {
+        res.status(500).send("Erro a listar os ficheiros")
+        console.error(error)
     }
+
 }; 
 
 exports.goback = (req,res)=>{
@@ -146,7 +127,7 @@ exports.rmdir = (req,res) =>{
     try {
         const dirAtual = urlHistory.getCurrentPath()    
         fileService.rmDir(req.body.path, dirAtual)
-        urlHistory.pathDestroyed()
+        urlHistory.pathDestroyed() //atualiza getCurrentPath()
         
         const dirAnterior = urlHistory.getCurrentPath()
         const files = fileService.listFiles(dirAnterior || '');
