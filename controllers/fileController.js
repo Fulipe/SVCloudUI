@@ -96,17 +96,9 @@ exports.mkdirPost = (req,res) =>{
 
         } else {
             try {
-                fileService.mkdir(req.body.nome, dirAtual)
+                fileService.mkdir(req.body.nome, dirAtual)   
                 
-                urlHistory.addPath('/' + decodeURIComponent(req.body.nome))
-                const dir = urlHistory.getCurrentPath()
-                
-                const files = fileService.listFiles(dir || '');
-
-                const emptyDirMsg = "Diretorio Vazio"
-
-                console.log(dir)
-                res.render('index', { files, emptyDirMsg, dirAtual:dir });
+                res.redirect('/folders/' + req.body.nome)
 
             } catch (error) {
                 res.status(500).send("Erro a criar diretorio ou mostrar diretorio")
