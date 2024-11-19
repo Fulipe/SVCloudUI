@@ -7,6 +7,20 @@ class UrlHistory {
         this.currentIndex = 0;        
     }
 
+    // addPath(url){
+    //     let lastUrl = this.history.slice(-1).toString();
+    //     let secondLastUrl = this.history.slice(-2).toString();
+    //     let concatUrl = secondLastUrl.concat(url)
+    //     if ( concatUrl == lastUrl) {
+    //         console.log(lastUrl)
+    //         console.log(concatUrl + " true")
+    //     } else {
+    //         console.log(lastUrl)
+    //         console.log(concatUrl + " false")
+    //     }
+    // }
+
+    // addPath 1.0 
     addPath(url){
         console.log(' ') //para separar processos com o fim de dar debug
     

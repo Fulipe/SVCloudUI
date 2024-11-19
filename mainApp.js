@@ -1,8 +1,15 @@
+const session = require('express-session');
 const express = require('express');
 const routes = require('./routes/routes');
 
 const app = express()
 const PORT = 5602;
+
+app.use(session({
+  secret: 'mysecret', 
+  resave: false,
+  saveUninitialized: true,
+}));
 
 app.set("view engine", "ejs"); 
 app.use(express.static(__dirname + '/views/'));

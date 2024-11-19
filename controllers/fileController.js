@@ -122,11 +122,8 @@ exports.rmdir = (req,res) =>{
         urlHistory.pathDestroyed() //atualiza getCurrentPath()
         
         const dirAnterior = urlHistory.getCurrentPath()
-        const files = fileService.listFiles(dirAnterior || '');
-        const emptyDirMsg = "Diretorio Vazio"
 
-        console.log(dirAnterior)
-        res.render('index', { files, emptyDirMsg, dirAtual });
+        res.redirect(dirAnterior)
         
     } catch (error) {
         res.status(500).send("Erro a apagar diretorio")

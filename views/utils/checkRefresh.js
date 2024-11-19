@@ -1,23 +1,27 @@
+window.addEventListener('load', () => {
+    const navigationType = performance.getEntriesByType('navigation')[0].type;
+    const isReload = navigationType === 'reload'
+    console.log(navigationType)
+    console.log(isReload) 
 
-if(window.location.reload){
-        
-}
-
-// const irBtn = document.querySelectorAll('.ir-btn');
-// let dirHref = '';
-
-// irBtn.forEach(button => function () {
-//     button.addEventListener('click', () => {
-//         dirHref = this.getAttribute('dir-href');
-//         return true;
-
-//     }).fetch('/folders', {
-//         method: 'GET',
-//         body: JSON.stringify({directory: dirHref, clicked:true}),
-//         headers: {'Content-Type': 'application/json'}
-//     }).then(() => {
-//         location.reload()
-//     }).catch(error => {
-//         console.error('Erro:', error);
-//     });
-// })
+    if(isReload){        
+        fetch('/navInfo', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({isReload: isReload})
+        })/*.then(() =>{
+            location.reload()
+            })
+        */
+    }
+    // if(navigationType === 'reload'){
+    //     isReload = true
+    //     console.log("REFRESH!")
+    //     fetch('/navInfo', {
+    //         method: 'POST',
+    //         headers: {'Content-Type': 'application/json'},
+    //         body: JSON.stringify({isReload: true})
+    //     })
+    //     console.log('pós-refresh: ' + isReload)
+    // }
+});
