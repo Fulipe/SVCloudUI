@@ -8,63 +8,6 @@ const fileService = new FileService('./data')
 //mkdir assim já dá display do diretorio atual
 var dirAtualDisplayed = ''
 
-//Deixa de ser necessário porque route '/' passa a estar definida
-// exports.listroot = (req, res) => {
-//     try{
-//         console.log("REQ URL:", req.originalUrl)
-//         const emptyDirMsg = "Diretorio Vazio"
-//         const dirAtual = req.originalUrl
-//         const files = fileService.listFiles(req.path || '');
-
-//         console.log("Ficheiros do dir: ", files)
-//         console.log("Caminho atual: " + dirAtual)
-//         console.log(" \n")
-//         res.render('index', { files, emptyDirMsg, dirAtual });
-
-//     } catch (err){
-//         res.status(500).send("Erro a listar os ficheiros")
-//         console.error(err)
-//     }
-// }
-
-// //ver maneira de colocar tudo assincrono
-// exports.listfolders = (req, res) => {
-//     try {
-//         urlHistory.addPath('/' + decodeURIComponent(req.body.dir)); 
-//         const dirAtual = urlHistory.getCurrentPath();
-//         const emptyDirMsg = "Diretorio Vazio"
-//         const files = fileService.listFiles(dirAtual || '');
-
-//         console.log("Ficheiros do dir: ", files)
-//         console.log("Caminho atual:", dirAtual)
-//         res.render('index', { files, emptyDirMsg, dirAtual });
-        
-//     } catch (error) {
-//         res.status(500).send("Erro a listar os ficheiros")
-//         console.error(error)
-//     }
-// }
-
-//listfolder 1.0
-// exports.listfolders = (req, res) => {
-//     try {
-        
-//         urlHistory.addPath('/' + decodeURIComponent(req.params.directory)); 
-//         const dirAtual = urlHistory.getCurrentPath();
-//         const emptyDirMsg = "Diretorio Vazio"
-//         const files = fileService.listFiles(dirAtual || '');
-
-//         console.log("Ficheiros do dir: ", files)
-//         console.log("Caminho atual:", dirAtual)
-//         res.render('index', { files, emptyDirMsg, dirAtual });
-        
-//     } catch (error) {
-//         res.status(500).send("Erro a listar os ficheiros")
-//         console.error(error)
-//     }
-
-// }; 
-
 exports.listfolders = (req, res) => {
     try {
 
@@ -72,12 +15,12 @@ exports.listfolders = (req, res) => {
         urlHistory.addPath(decodeURIComponent(req.path)); 
         
         //Mostra caminho na nav
-        dirAtualDisplayed = req.originalUrl;
+        dirAtualDisplayed = decodeURIComponent(req.originalUrl);
         
         const emptyDirMsg = "Diretorio Vazio"
 
         //envia para fileService path completo, tirando o dir base
-        const files = fileService.listFiles(req.path || '');
+        const files = fileService.listFiles(decodeURIComponent(req.path)|| '');
 
         console.log("Ficheiros do dir: ", files)
         console.log("Caminho atual:", dirAtualDisplayed)
