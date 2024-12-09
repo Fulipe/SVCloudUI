@@ -5,8 +5,9 @@
     <%- include('shared/navbar') -%>   
     
     <h2>Criar diretório em: <%= dirAtual %></h2>
+    <h4><%= msgCheckDir %></h4>
     
-    <form action="/createdir" method="post">
+    <form action="/navigation/createdir" method="post">
         <div class="row g-3">
             <div class="col-sm-4">
                 <input name="nome" type="text" class="form-control" placeholder="Escreve nome do novo diretório">

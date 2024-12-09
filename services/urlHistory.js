@@ -1,57 +1,54 @@
 class UrlHistory {
     constructor() {
-        this.history = ['data'];
+        this.history = [];
 
         //começa em -1 porque o array é inicializado, vazio. 
         //À medida que se navega, o index é incrementado estabelecendo-se, sempre, no dir mais recentemente adicionado.
-        this.currentIndex = 0;        
+        this.currentIndex = -1;        
     }
 
-    // addPath(url){
-    //     let lastUrl = this.history.slice(-1).toString();
-    //     let secondLastUrl = this.history.slice(-2).toString();
-    //     let concatUrl = secondLastUrl.concat(url)
-    //     if ( concatUrl == lastUrl) {
-    //         console.log(lastUrl)
-    //         console.log(concatUrl + " true")
-    //     } else {
-    //         console.log(lastUrl)
-    //         console.log(concatUrl + " false")
-    //     }
-    // }
+    addPath(url){
+
+        console.log("URL PRE-PUSH: ", url)
+        
+        this.history.push(url)
+        this.currentIndex ++;
+
+        console.log(this.history)
+    }
 
     // addPath 1.0 
-    addPath(url){
-        console.log(' ') //para separar processos com o fim de dar debug
+    // addPath(url){
+    //     console.log(' ') //para separar processos com o fim de dar debug
     
 
-        //adicionar um caminho, depois, de se ter retrocedido. Apaga diretorios futuros antes navegados
-        if (this.currentIndex < this.history.length - 1) {
+    //     //adicionar um caminho, depois, de se ter retrocedido. Apaga diretorios futuros antes navegados
+    //     if (this.currentIndex < this.history.length - 1) {
 
-            //substitui registo de historico por um atualizado sem links futuros
-            this.history = this.history.slice(0, this.currentIndex + 1)
+    //         //substitui registo de historico por um atualizado sem links futuros
+    //         this.history = this.history.slice(0, this.currentIndex + 1)
             
-            let lastUrl = this.history.slice(-1).toString();
-            let urlToPush = lastUrl.concat(url) 
+    //         let lastUrl = this.history.slice(-1).toString();
+    //         let urlToPush = lastUrl.concat(url) 
 
-            this.history.push(urlToPush)
-            this.currentIndex++
+    //         this.history.push(urlToPush)
+    //         this.currentIndex++
 
-            // console.log("Disparou addPath if " + this.currentIndex)
-            console.log(this.history)
+    //         // console.log("Disparou addPath if " + this.currentIndex)
+    //         console.log(this.history)
 
-        //se já houver 1 link no historico, juntar url novo ao parent para criar caminho para subdiretorio
-        } else {
-            let lastUrl = this.history.slice(-1).toString();
-            let urlToPush = lastUrl.concat(url) 
+    //     //se já houver 1 link no historico, juntar url novo ao parent para criar caminho para subdiretorio
+    //     } else {
+    //         let lastUrl = this.history.slice(-1).toString();
+    //         let urlToPush = lastUrl.concat(url) 
 
-            this.history.push(urlToPush)
-            this.currentIndex++
+    //         this.history.push(urlToPush)
+    //         this.currentIndex++
 
-            // console.log("Disparou else if: " + this.currentIndex)
-            console.log("Historico: ", this.history)
-        }
-    }
+    //         // console.log("Disparou else if: " + this.currentIndex)
+    //         console.log("Historico: ", this.history)
+    //     }
+    // }
 
     goBack(){
         if (this.currentIndex > 0) {

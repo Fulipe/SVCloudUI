@@ -3,24 +3,6 @@
 <%- include('shared/head') %>
 <body>
     <%- include('shared/navbar') -%>    
-    
-    <!-- Caixa de diálogo para confirmar a eliminação -->
-    <dialog id="confirmDelDialog">
-        <div class="container text-center">
-            <div class="row justify-content-between">
-                <h5 class="col-sm-4">Eliminar Diretório</h5>
-                <button class="btn col-sm-1" id="closeCross"><i class="bi bi-x-lg"></i></button>
-            </div>
-            <hr>
-            <div class="row">
-                <p>Tens a certeza de que queres eliminar o diretório <b><span id="nameDir"></span></b> e todo o seu conteúdo?</p>
-            </div>
-            <div class="row justify-content-end text-center">
-                <button class="btn btn-secondary col-sm-2" id="cancelDelete">Cancelar</button>
-                <button class="btn btn-danger col-sm-2 ms-1" id="confirmDelete"><i class="bi bi-trash-fill"></i>Apagar</button>
-            </div>
-        </div>
-    </dialog>
         
     <div class="row">
         <% if (files.length == 0) {%>
@@ -28,14 +10,32 @@
                 <h3 class="text-bg-danger"><%= emptyDirMsg %></h3>
             </div>
             <% } else { %>
+                    
+                <!-- Caixa de diálogo para confirmar a eliminação -->
+                <dialog id="confirmDelDialog">
+                    <div class="container text-center">
+                        <div class="row justify-content-between">
+                            <h5 class="col-sm-4">Eliminar Diretório</h5>
+                            <button class="btn col-sm-1" id="closeCross"><i class="bi bi-x-lg"></i></button>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <p>Tens a certeza de que queres eliminar o diretório <b><span id="nameDir"></span></b> e todo o seu conteúdo?</p>
+                        </div>
+                        <div class="row justify-content-end text-center">
+                            <button class="btn btn-secondary col-sm-2" id="cancelDelete">Cancelar</button>
+                            <button class="btn btn-danger col-sm-2 ms-1" id="confirmDelete"><i class="bi bi-trash-fill"></i>Apagar</button>
+                        </div>
+                    </div>
+                </dialog>
                 <% files.forEach(file => { %>
                     <% if (file.isDirectory) { %>
                         <div class="col-sm-4 mb-3 mb-sm-0">
                             <div class="card " style="background-color: rgb(243, 215, 146);">
                                 <div class="card-body">
                                     <h5 class="card-title"><%= file.name %></h5>
-                                    <a href="/folders/<%=file.name%>" class="btn btn-primary">Ir >>></a>
-                                    <!-- <button class="ir-btn btn btn-primary" dirName= "<%= file.name %>" value="false">Ir >>></button> -->
+                                    <a href="/data<%=file.path%>" class="btn btn-primary">Ir >>></a>
+                                    <!-- <button class="ir-btn btn btn-primary" dirName= "<%= file.name %>">Ir >>></button> -->
                                     
                                     <button class="del-btn btn btn-danger" data-file-name="<%= file.name %>"><i class="bi bi-trash-fill"></i></button>
                                     <a href="/edit/<%= file.name %>" class="btn btn-secondary" id="editBtn"><i class="bi bi-pencil-fill"></i></a>
@@ -59,8 +59,8 @@
                 <% }); %>
             <% } %>                     
     </div>  
-    <script src="../utils/confirmationDelete.js"></script>
-    <script src="../utils/navigation.js"></script>
+    <!-- <script src="../utils/confirmationDelete.js"></script>
+    <script src="../utils/navigation.js"></script> -->
     
 </body>
 </html> 

@@ -1,37 +1,87 @@
+const path = require('path');
 const FileService = require('../services/fileServices.js');
 const UrlHistory = require('../services/urlHistory.js');
 const urlHistory = new UrlHistory();
-const fileService = new FileService()
+const fileService = new FileService('./data')
 
-exports.listroot = (req, res) => {
-    try{
-        //if para que checkar se já há um dir no historico (haverá sempre porque root é carregada diretamente)
+//guarda valor do dir atual guardado
+//mkdir assim já dá display do diretorio atual
+var dirAtualDisplayed = ''
 
-        urlHistory.getRoot()
-        const emptyDirMsg = "Diretorio Vazio"
-        const dirAtual = urlHistory.getCurrentPath()
-        const files = fileService.listFiles(dirAtual);
-    
-        console.log("Caminho atual: " + dirAtual)
-        res.render('index', { files, emptyDirMsg, dirAtual });
+//Deixa de ser necessário porque route '/' passa a estar definida
+// exports.listroot = (req, res) => {
+//     try{
+//         console.log("REQ URL:", req.originalUrl)
+//         const emptyDirMsg = "Diretorio Vazio"
+//         const dirAtual = req.originalUrl
+//         const files = fileService.listFiles(req.path || '');
 
-    } catch (err){
-        res.status(500).send("Erro a listar os ficheiros")
-        console.error(err)
-    }
-}
+//         console.log("Ficheiros do dir: ", files)
+//         console.log("Caminho atual: " + dirAtual)
+//         console.log(" \n")
+//         res.render('index', { files, emptyDirMsg, dirAtual });
+
+//     } catch (err){
+//         res.status(500).send("Erro a listar os ficheiros")
+//         console.error(err)
+//     }
+// }
+
+// //ver maneira de colocar tudo assincrono
+// exports.listfolders = (req, res) => {
+//     try {
+//         urlHistory.addPath('/' + decodeURIComponent(req.body.dir)); 
+//         const dirAtual = urlHistory.getCurrentPath();
+//         const emptyDirMsg = "Diretorio Vazio"
+//         const files = fileService.listFiles(dirAtual || '');
+
+//         console.log("Ficheiros do dir: ", files)
+//         console.log("Caminho atual:", dirAtual)
+//         res.render('index', { files, emptyDirMsg, dirAtual });
+        
+//     } catch (error) {
+//         res.status(500).send("Erro a listar os ficheiros")
+//         console.error(error)
+//     }
+// }
+
+//listfolder 1.0
+// exports.listfolders = (req, res) => {
+//     try {
+        
+//         urlHistory.addPath('/' + decodeURIComponent(req.params.directory)); 
+//         const dirAtual = urlHistory.getCurrentPath();
+//         const emptyDirMsg = "Diretorio Vazio"
+//         const files = fileService.listFiles(dirAtual || '');
+
+//         console.log("Ficheiros do dir: ", files)
+//         console.log("Caminho atual:", dirAtual)
+//         res.render('index', { files, emptyDirMsg, dirAtual });
+        
+//     } catch (error) {
+//         res.status(500).send("Erro a listar os ficheiros")
+//         console.error(error)
+//     }
+
+// }; 
 
 exports.listfolders = (req, res) => {
     try {
+
+        //manda só req.path porque o sistema já tem '/data' como diretorio base
+        urlHistory.addPath(decodeURIComponent(req.path)); 
         
-        urlHistory.addPath('/' + decodeURIComponent(req.params.directory)); 
-        const dirAtual = urlHistory.getCurrentPath();
+        //Mostra caminho na nav
+        dirAtualDisplayed = req.originalUrl;
+        
         const emptyDirMsg = "Diretorio Vazio"
-        const files = fileService.listFiles(dirAtual || '');
+
+        //envia para fileService path completo, tirando o dir base
+        const files = fileService.listFiles(req.path || '');
 
         console.log("Ficheiros do dir: ", files)
-        console.log("Caminho atual:", dirAtual)
-        res.render('index', { files, emptyDirMsg, dirAtual });
+        console.log("Caminho atual:", dirAtualDisplayed)
+        res.render('index', { files, emptyDirMsg, dirAtual:dirAtualDisplayed });
         
     } catch (error) {
         res.status(500).send("Erro a listar os ficheiros")
@@ -43,13 +93,6 @@ exports.listfolders = (req, res) => {
 exports.goback = (req,res)=>{
     try{
         urlHistory.goBack();
-        const dirAtual = urlHistory.getCurrentPath();
-
-        const emptyDirMsg = "Diretorio Vazio"
-
-        const files = fileService.listFiles(dirAtual || '');
-        console.log(dirAtual)
-        res.render('index', {files, emptyDirMsg, dirAtual});
 
     } catch (err){
         res.status(500).send("Erro a listar os ficheiros [exports.goback]")
@@ -76,8 +119,10 @@ exports.goforward = (req, res) => {
 
 exports.mkdir = (req,res) => {
     try{
-        const dirAtual = urlHistory.getCurrentPath()
-        res.render('mkdir', { dirAtual });
+        //inicialização variavel
+        const msgCheckDir = ''
+        //dá render à view mkdir, e envia o nome do diretorio onde se vai adicionar um novo dir
+        res.render('mkdir', { dirAtual:dirAtualDisplayed, msgCheckDir });
 
     } catch (err) {
         res.status(500).send("Erro a ir para criação de dir")
@@ -88,17 +133,24 @@ exports.mkdir = (req,res) => {
 
 exports.mkdirPost = (req,res) =>{
     try{
-        const dirAtual = urlHistory.getCurrentPath()
+        //vai buscar apenas req.path guardado
+        const dirAtual = urlHistory.getCurrentPath() 
 
         if(fileService.checkExistsDir(req.body.nome, dirAtual) === true){
-            console.log('O nome que inseriu já existe. Tente novamente.')
-            res.render('mkdir', {dirAtual})
+
+            //mensagem quando dir já existe
+            const msgCheckDir = 'O nome que inserido já existe num diretório. Insere outro nome'
+
+            res.render('mkdir', {dirAtual:dirAtualDisplayed, msgCheckDir})
 
         } else {
             try {
                 fileService.mkdir(req.body.nome, dirAtual)   
-                
-                res.redirect('/folders/' + req.body.nome)
+                            
+                //Correção path que é enviada para a nav de seguida 
+                dirAtual == '/'  
+                    ? res.redirect('/data' + dirAtual + req.body.nome) //caso o dir seja add em /data
+                    : res.redirect('/data' + dirAtual + '/' + req.body.nome) //caso o dir seja add em dirs +2º grau
 
             } catch (error) {
                 res.status(500).send("Erro a criar diretorio ou mostrar diretorio")
