@@ -52,9 +52,13 @@ class FileService{
         })
     }
 
-    rmDir(params, dirAtual){
-        //constrói path, até ao dir que vai ser eliminado
-        const dirDeleted = path.join(dirAtual, params)
+    rmDir(name, dirAtual){
+        //constrói path, até ao dir que vai ser criado
+
+        //junta dir base com path guardada no historico
+        const pathReq = path.join(this.baseDir, dirAtual)
+        //junta dir construido acima, com nome do novo diretorio
+        const dirDeleted = path.join(pathReq, name)
 
         //elimina recursivamente, para que seja possivel eliminar diretorios com ficheiros
         fs.rm(dirDeleted, {recursive: true}, (err)=>{

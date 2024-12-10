@@ -112,13 +112,10 @@ exports.mkdirPost = (req,res) =>{
 
 exports.rmdir = (req,res) =>{
     try {
-        const dirAtual = urlHistory.getCurrentPath()    
+        const dirAtual = urlHistory.getCurrentPath()
         fileService.rmDir(req.body.path, dirAtual)
-        urlHistory.pathDestroyed() //atualiza getCurrentPath()
         
-        const dirAnterior = urlHistory.getCurrentPath()
-
-        res.redirect(dirAnterior)
+        res.redirect(dirAtualDisplayed)
         
     } catch (error) {
         res.status(500).send("Erro a apagar diretorio")
