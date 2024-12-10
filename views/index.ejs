@@ -60,7 +60,6 @@
             <% } %>                     
     </div>  
 
-    <!-- <script src="../utils/navigation.js"></script> -->
     <script>
         //#region DELETE
         const deleteButtons = document.querySelectorAll('.del-btn'); // Seleciona todos os botões de delete
@@ -106,6 +105,19 @@
 
         })
         //#endregion
+        //#region NAVIGATION BUTTONS 
+        const goBack = document.getElementById('goBack')
+        const goForward = document.getElementById('goForward')
+
+        
+        goBack.addEventListener('click', () => {
+            history.back()
+        });
+
+        goForward.addEventListener('click', () => {
+            history.forward()
+        });
+  //#endregion
     </script>
 </body>
 </html> 

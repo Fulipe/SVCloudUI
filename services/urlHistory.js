@@ -84,10 +84,6 @@ class UrlHistory {
         }
     }
 
-    getRoot(){
-        this.currentIndex = 0;
-    }
-
     //Quando se elimina um diretorio, apaga o ultimo item do array 'history' e decresce um no index, para ficar no mesmo dir (o parent)
     pathDestroyed(){
         this.history.pop()
