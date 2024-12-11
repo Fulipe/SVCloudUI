@@ -36,6 +36,8 @@ exports.listfolders = (req, res) => {
 exports.goback = (req,res)=>{
     try{
         urlHistory.goBack();
+        const dirAtual = urlHistory.getCurrentPath() 
+        res.redirect('/data' + dirAtual)
 
     } catch (err){
         res.status(500).send("Erro a listar os ficheiros [exports.goback]")
@@ -46,13 +48,8 @@ exports.goback = (req,res)=>{
 exports.goforward = (req, res) => {
     try{
         urlHistory.goForward()
-        const dirAtual = urlHistory.getCurrentPath();
-
-        const emptyDirMsg = "Diretorio Vazio"
-        
-        const files = fileService.listFiles(dirAtual || '');
-        console.log(dirAtual)
-        res.render('index', { files, emptyDirMsg, dirAtual });
+        const dirAtual = urlHistory.getCurrentPath() 
+        res.redirect('/data' + dirAtual)
 
     } catch (err){
         res.status(500).send("Erro a listar os ficheiros [exports.goforward]")
