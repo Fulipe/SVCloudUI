@@ -21,9 +21,23 @@
                     <i class="bi bi-plus-circle"></i><b> Criar</b>
                   </a>
                 </li>
-                <li class="nav-item">
-                    <h3> <%= dirAtual %> </h3>
-                </li>
+                <% for( let i = 0; i < dirAtual.length; i++ ) { %>
+
+                  <!-- Se dir que aparecer for "/" substituir por apenas aparece "/" e não "//" que é o comportamento normal -->
+                  <!-- fazer com que direcione para o dir certo em dirs de +3ºgrau Ex: data/dir/aaa/bbb clicar no aaa/ manda para data/aaa -->
+                  <!-- e não para data/dir/aaa/ -->
+
+                  <% if (dirAtual[i] == "/") { %>                   
+                    <li class="nav-item"> 
+                      <a href="/data/<%= dirAtual[i] %>"><h3>/</h3></a>
+                    </li>
+                    <% } else {%>
+                      <li class="nav-item"> 
+                      <a href="/data/<%= dirAtual[i] %>"><h3><%= dirAtual[i] %>/</h3></a>
+                    </li>
+                  <% } %>
+                <% } %>
+
             </ul>
           </div>
       </div>

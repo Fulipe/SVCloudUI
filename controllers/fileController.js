@@ -15,7 +15,11 @@ exports.listfolders = (req, res) => {
         urlHistory.addPath(decodeURIComponent(req.path)); 
         
         //Mostra caminho na nav
-        dirAtualDisplayed = decodeURIComponent(req.originalUrl);
+        // dirAtualDisplayed = decodeURIComponent(req.originalUrl);
+        dirAtualDisplayed = decodeURIComponent(req.path);
+
+        //split aos dirs nos "/" para segmentar os links 
+        const dirSplit = dirAtualDisplayed == "/" ? dirAtualDisplayed.split(' ') : dirAtualDisplayed.split('/')
         
         const emptyDirMsg = "Diretorio Vazio"
 
@@ -24,7 +28,7 @@ exports.listfolders = (req, res) => {
 
         console.log("Ficheiros do dir: ", files)
         console.log("Caminho atual:", dirAtualDisplayed)
-        res.render('index', { files, emptyDirMsg, dirAtual:dirAtualDisplayed });
+        res.render('index', { files, emptyDirMsg, dirAtual:dirSplit });
         
     } catch (error) {
         res.status(500).send("Erro a listar os ficheiros")
