@@ -8,7 +8,8 @@ const PORT = 5602;
 app.set("view engine", "ejs"); 
 app.use(express.static(__dirname + '/views/'));
 
-app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
+app.use('/bootstrap', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
+app.use('/css', express.static(__dirname + '/views/styles'));
 app.get('/favicon.ico', (req, res) => res.status(204));
 
 app.use(express.json());
@@ -26,21 +27,3 @@ app.use('/navigation', navigation);
 app.listen(PORT, () => {
   console.log("Listening on port " + PORT);
 });
-
-//////////////////////////////////////////////////////////////////////////////////////////////
-
-// const express = require('express');
-// const app = express();
-// const PORT = 5602;
-// const routes = require('./routes/routes');
-
-// app.set("view engine", "ejs"); 
-// app.use(express.static(__dirname + '/views/'));
-// app.use('/css', express.static(__dirname + '/node_modules/bootstrap/dist/css'));
-// app.get('/favicon.ico', (req, res) => res.status(204));
-// app.use('/api', routes);
-
-// app.listen(PORT, () => {
-//   console.log("Listening on port " + PORT);
-// });  
-

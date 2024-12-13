@@ -24,7 +24,7 @@ exports.listfolders = (req, res) => {
         const emptyDirMsg = "Diretorio Vazio"
 
         //envia para fileService path completo, tirando o dir base
-        const files = fileService.listFiles(decodeURIComponent(req.path)|| '');
+        const files = fileService.listFiles(dirAtualDisplayed || '');
 
         console.log("Ficheiros do dir: ", files)
         console.log("Caminho atual:", dirAtualDisplayed)
@@ -63,10 +63,13 @@ exports.goforward = (req, res) => {
 
 exports.mkdir = (req,res) => {
     try{
+        //split aos dirs nos "/" para segmentar os links 
+        const dirSplit = dirAtualDisplayed == "/" ? dirAtualDisplayed.split('') : dirAtualDisplayed.split('/')
         //inicialização variavel
+        console.log('mkdir: ', dirSplit)
         const msgCheckDir = ''
         //dá render à view mkdir, e envia o nome do diretorio onde se vai adicionar um novo dir
-        res.render('mkdir', { dirAtual:dirAtualDisplayed, msgCheckDir });
+        res.render('mkdir', { dirAtual:dirSplit, msgCheckDir });
 
     } catch (err) {
         res.status(500).send("Erro a ir para criação de dir")
@@ -79,13 +82,14 @@ exports.mkdirPost = (req,res) =>{
     try{
         //vai buscar apenas req.path guardado
         const dirAtual = urlHistory.getCurrentPath() 
+        const dirSplit = dirAtualDisplayed == "/" ? dirAtualDisplayed.split('') : dirAtualDisplayed.split('/')
 
         if(fileService.checkExistsDir(req.body.nome, dirAtual) === true){
 
             //mensagem quando dir já existe
             const msgCheckDir = 'O nome que inserido já existe num diretório. Insere outro nome'
 
-            res.render('mkdir', {dirAtual:dirAtualDisplayed, msgCheckDir})
+            res.render('mkdir', {dirAtual:dirSplit, msgCheckDir})
 
         } else {
             try {

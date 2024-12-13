@@ -4,7 +4,15 @@
 <body>
     <%- include('shared/navbar') -%>   
     
-    <h2>Criar diretório em: <%= dirAtual %></h2>
+    <h2>Criar diretório em:
+        <% for( let i = 0; i < dirAtual.length; i++ ) { %>
+            <% if (dirAtual[i] == "/") { %>
+                /                   
+            <% } else {%>
+                <%=dirAtual[i]%>/                
+            <% } %>
+      <% } %>
+    </h2>
     <h4><%= msgCheckDir %></h4>
     
     <form action="/navigation/createdir" method="post">

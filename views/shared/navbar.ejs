@@ -33,7 +33,7 @@
                     </li>
                     <% } else {%>
                       <li class="nav-item"> 
-                      <a href="/data/<%= dirAtual[i] %>"><h3><%= dirAtual[i] %>/</h3></a>
+                      <a href="/data/<%= dirAtual[i] %>"><h3><%=dirAtual[i]%>/</h3></a>
                     </li>
                   <% } %>
                 <% } %>
@@ -43,3 +43,26 @@
       </div>
   </div>
 </nav>
+
+
+    <!-- SCRIPT NAVIGATION -->
+    <script>
+      //#region NAVIGATION BUTTONS 
+      const goBack = document.getElementById('goBack')
+      const goForward = document.getElementById('goForward')
+
+      
+      goBack.addEventListener('click', () => {
+          fetch('/navigation/back', {
+              method: 'GET',
+              headers: { 'Content-Type': 'application/json' }
+          }).then(()=>{
+              history.back()
+          })
+      });
+
+      goForward.addEventListener('click', () => {
+          history.forward()
+      });
+//#endregion
+  </script>
