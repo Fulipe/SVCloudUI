@@ -37,29 +37,6 @@ exports.listfolders = (req, res) => {
 
 }; 
 
-exports.goback = (req,res)=>{
-    try{
-        urlHistory.goBack();
-        const dirAtual = urlHistory.getCurrentPath() 
-        res.redirect('/data' + dirAtual)
-
-    } catch (err){
-        res.status(500).send("Erro a listar os ficheiros [exports.goback]")
-        console.error(err)
-    }
-};
-
-exports.goforward = (req, res) => {
-    try{
-        urlHistory.goForward()
-        const dirAtual = urlHistory.getCurrentPath() 
-        res.redirect('/data' + dirAtual)
-
-    } catch (err){
-        res.status(500).send("Erro a listar os ficheiros [exports.goforward]")
-        console.error(err)
-    }
-};
 
 exports.mkdir = (req,res) => {
     try{
@@ -70,7 +47,7 @@ exports.mkdir = (req,res) => {
         const msgCheckDir = ''
         //dá render à view mkdir, e envia o nome do diretorio onde se vai adicionar um novo dir
         res.render('mkdir', { dirAtual:dirSplit, msgCheckDir });
-
+        
     } catch (err) {
         res.status(500).send("Erro a ir para criação de dir")
         console.error(err)
@@ -83,36 +60,36 @@ exports.mkdirPost = (req,res) =>{
         //vai buscar apenas req.path guardado
         const dirAtual = urlHistory.getCurrentPath() 
         const dirSplit = dirAtualDisplayed == "/" ? dirAtualDisplayed.split('') : dirAtualDisplayed.split('/')
-
+        
         if(fileService.checkExistsDir(req.body.nome, dirAtual) === true){
-
+            
             //mensagem quando dir já existe
             const msgCheckDir = 'O nome que inserido já existe num diretório. Insere outro nome'
-
+            
             res.render('mkdir', {dirAtual:dirSplit, msgCheckDir})
-
+            
         } else {
             try {
                 fileService.mkdir(req.body.nome, dirAtual)   
-                            
+                
                 //Correção path que é enviada para a nav de seguida 
                 dirAtual == '/'  
-                    ? res.redirect('/data' + dirAtual + req.body.nome) //caso o dir seja add em /data
+                ? res.redirect('/data' + dirAtual + req.body.nome) //caso o dir seja add em /data
                     : res.redirect('/data' + dirAtual + '/' + req.body.nome) //caso o dir seja add em dirs +2º grau
-
-            } catch (error) {
+                    
+                } catch (error) {
                 res.status(500).send("Erro a criar diretorio ou mostrar diretorio")
                 console.error(error)
                 
             }
         }
-
+        
     } catch (err) {
         res.status(500).send("Erro a ir para criação de dir")
         console.error(err)
     }
     
-
+    
 }
 
 exports.rmdir = (req,res) =>{
@@ -127,3 +104,28 @@ exports.rmdir = (req,res) =>{
         console.error(error)
     }
 }
+
+
+// exports.goback = (req,res)=>{
+//     try{
+//         // urlHistory.goBack();
+//         // dirAtualDisplayed = urlHistory.getCurrentPath() 
+//         // console.log("DirAtual goback: ", "/data" + dirAtualDisplayed)
+
+//     } catch (err){
+//         res.status(500).send("Erro a listar os ficheiros [exports.goback]")
+//         console.error(err)
+//     }
+// };
+
+// exports.goforward = (req, res) => {
+//     try{
+//         urlHistory.goForward()
+//         const dirAtual = urlHistory.getCurrentPath() 
+//         res.redirect('/data' + dirAtual)
+
+//     } catch (err){
+//         res.status(500).send("Erro a listar os ficheiros [exports.goforward]")
+//         console.error(err)
+//     }
+// };

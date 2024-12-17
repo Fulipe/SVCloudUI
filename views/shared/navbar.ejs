@@ -7,62 +7,21 @@
           <div class="navCommands">
             <ul>
                 <li class="nav-item"> 
-                  <button class="btn btn-light" id="goBack">                
-                    <i class="bi bi-caret-left-fill"></i>
-                  </a> 
-                </li>
-                <li class="nav-item"> 
-                  <button class="btn btn-light" id="goForward">
-                    <i class="bi bi-caret-right-fill"></i>
-                  </a>
-                </li>
-                <li class="nav-item"> 
                   <a href="/navigation/createdir" class="btn btn-success" id="mkdirBtn">
                     <i class="bi bi-plus-circle"></i><b> Criar</b>
                   </a>
                 </li>
-                <% for( let i = 0; i < dirAtual.length; i++ ) { %>
-
-                  <!-- Se dir que aparecer for "/" substituir por apenas aparece "/" e não "//" que é o comportamento normal -->
-                  <!-- fazer com que direcione para o dir certo em dirs de +3ºgrau Ex: data/dir/aaa/bbb clicar no aaa/ manda para data/aaa -->
-                  <!-- e não para data/dir/aaa/ -->
-
-                  <% if (dirAtual[i] == "/") { %>                   
-                    <li class="nav-item"> 
-                      <a href="/data/<%= dirAtual[i] %>"><h3>/</h3></a>
-                    </li>
-                    <% } else {%>
-                      <li class="nav-item"> 
-                      <a href="/data/<%= dirAtual[i] %>"><h3><%=dirAtual[i]%>/</h3></a>
-                    </li>
-                  <% } %>
-                <% } %>
-
+                <% 
+                let currentPath = ""; 
+                dirAtual.forEach((dir, index) => {
+                  currentPath += `/${dir}`;
+                %>
+                  <li class="nav-item">
+                    <a href="/data<%= currentPath %>"><h3>/<%= dir %></h3></a>
+                  </li>
+                <% }) %>               
             </ul>
           </div>
       </div>
   </div>
 </nav>
-
-
-    <!-- SCRIPT NAVIGATION -->
-    <script>
-      //#region NAVIGATION BUTTONS 
-      const goBack = document.getElementById('goBack')
-      const goForward = document.getElementById('goForward')
-
-      
-      goBack.addEventListener('click', () => {
-          fetch('/navigation/back', {
-              method: 'GET',
-              headers: { 'Content-Type': 'application/json' }
-          }).then(()=>{
-              history.back()
-          })
-      });
-
-      goForward.addEventListener('click', () => {
-          history.forward()
-      });
-//#endregion
-  </script>

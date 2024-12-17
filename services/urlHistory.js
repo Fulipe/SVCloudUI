@@ -50,25 +50,25 @@ class UrlHistory {
     //     }
     // }
 
-    goBack(){
-        if (this.currentIndex > 0) {
-            this.currentIndex--;
+    // goBack(){
+    //     if (this.currentIndex > 0) {
+    //         this.currentIndex--;
 
-            // console.log("Disparou back: " + this.currentIndex)
-            console.log(this.history)
+    //         // console.log("Disparou back: " + this.currentIndex)
+    //         console.log(this.history)
 
-        } else return null
-    }
+    //     } else return null
+    // }
     
-    goForward(){
-        if (this.currentIndex < this.history.length -1) {
-            this.currentIndex++;
+    // goForward(){
+    //     if (this.currentIndex < this.history.length -1) {
+    //         this.currentIndex++;
 
-            // console.log("Disparou forward: " + this.currentIndex)
-            console.log(this.history)
+    //         // console.log("Disparou forward: " + this.currentIndex)
+    //         console.log(this.history)
 
-        } else return null
-    }
+    //     } else return null
+    // }
 
     getCurrentPath() {
         if (this.currentIndex >= 0 && this.currentIndex < this.history.length) {

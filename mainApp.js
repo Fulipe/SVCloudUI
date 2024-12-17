@@ -27,3 +27,26 @@ app.use('/navigation', navigation);
 app.listen(PORT, () => {
   console.log("Listening on port " + PORT);
 });
+
+
+// const port = 5602
+// const dir = __dirname + '/data'
+
+// const express = require('express');
+// const serveIndex = require('serve-index');
+// const cors = require('cors')
+
+// const app = express()
+// app.disable("x-powered-by")
+// app.use(cors())
+// app.use(express.json());
+// app.use(express.urlencoded({ extended: true }));
+
+// app.get('/', (req,res)=>{
+//   res.send(`Server <a href="${ req.protocol + '://' + req.get('host') + req.originalUrl+"ftp"}">AAA</a>`)
+// })
+
+// app.use('/ftp', serveIndex(dir + '/'))
+
+
+// app.listen(port)
