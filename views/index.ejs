@@ -37,7 +37,6 @@
 
                                     <a href="/data<%=file.path%>" class="btn btn-primary">Ir >>></a>                                   
                                     <button class="del-btn btn btn-danger" data-file-name="<%= file.name %>"><i class="bi bi-trash-fill"></i></button>
-                                    <!-- <a href="/edit/<%= file.name %>" class="btn btn-secondary" id="editBtn"><i class="bi bi-pencil-fill"></i></a> -->
                                     <button class="edit-btn btn btn-secondary" id="editBtn"><i class="bi bi-pencil-fill"></i></button>
                                 </div>
                             </div>
@@ -48,10 +47,8 @@
                                     <div class="card-body">
                                         <h5 class="card-title"><%= file.name %></h5>
                                         <a href="/files/<%=file.name%>" class="btn btn-primary">Ir >>></a>
-                                        
                                         <button class="btn btn-danger del-btn" data-file-name="<%= file.name %>"><i class="bi bi-trash-fill"></i></button>
-                                        <a href="/edit/<%= file.name %>" class="btn btn-secondary" id="editBtn"><i class="bi bi-pencil-fill"></i></a>
-                                    </div>
+                                        <button class="edit-btn btn btn-secondary" id="editBtn"><i class="bi bi-pencil-fill"></i></button>                                    </div>
                                 </div>
                             </div>     
                             

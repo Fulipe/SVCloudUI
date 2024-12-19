@@ -37,6 +37,20 @@ exports.listfolders = (req, res) => {
 
 }; 
 
+exports.getfile = (req, res) => {
+    const dirAtual = urlHistory.getCurrentPath()
+    console.log(req.path)
+
+    //ao clicar em "Ir >>>" num ficheiro, fará download no ficheiro para a máquina
+    res.download(req.path)
+
+    // dirAtual == '/'  
+    // ? res.download('/data' + dirAtual + req.path) //caso o dir seja add em /data
+    // : res.download('/data' + dirAtual + '/' + req.path) //caso o dir seja add em dirs +2º grau
+
+    // res.redirect('/data' + dirAtual)
+}
+
 
 exports.mkdir = (req,res) => {
     try{
@@ -75,7 +89,7 @@ exports.mkdirPost = (req,res) =>{
                 //Correção path que é enviada para a nav de seguida 
                 dirAtual == '/'  
                 ? res.redirect('/data' + dirAtual + req.body.nome) //caso o dir seja add em /data
-                    : res.redirect('/data' + dirAtual + '/' + req.body.nome) //caso o dir seja add em dirs +2º grau
+                : res.redirect('/data' + dirAtual + '/' + req.body.nome) //caso o dir seja add em dirs +2º grau
                     
                 } catch (error) {
                 res.status(500).send("Erro a criar diretorio ou mostrar diretorio")

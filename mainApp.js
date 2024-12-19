@@ -1,6 +1,7 @@
 const express = require('express');
 const listingDirectories = require('./routes/listingDirectories');
 const navigation = require('./routes/navigation');
+const files = require('./routes/files');
 
 const app = express()
 const PORT = 5602;
@@ -22,6 +23,7 @@ app.get('/', (req, res)=>{
 
 //Middleware para ir buscar routes
 app.use('/data', listingDirectories);
+app.use('/files', files);
 app.use('/navigation', navigation);
 
 app.listen(PORT, () => {

@@ -73,12 +73,12 @@ class FileService{
         //constroi novo path, com novo nome
         const newPath = path.join(pathReq, newName)
         
-        fs.renameSync(oldPath, newPath), (err) =>{
+        fs.renameSync(oldPath, newPath, (err) =>{
             console.log("Diretorio editado: ", 
                 "\nAntigo: ", oldPath, 
                 " \nNovo: ", newPath)
             if (err) throw err;
-        } 
+        }) 
     }
 
 }

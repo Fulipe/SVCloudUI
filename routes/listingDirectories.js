@@ -4,12 +4,13 @@ const fileController = require('../controllers/fileController');
 const router = express.Router();
 
 
-router.get('/', fileController.listfolders)
-
-router.post('/delete', fileController.rmdir)
-
-router.post('/edit', fileController.editdir)
+router.get('/', fileController.listfolders);
 
 router.get('/*', fileController.listfolders);
+
+router.post('/delete', fileController.rmdir);
+
+router.post('/edit', fileController.editdir);
+
 
 module.exports = router;
