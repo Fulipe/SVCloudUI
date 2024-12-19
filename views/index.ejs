@@ -34,11 +34,11 @@
                             <div class="card " style="background-color: rgb(243, 215, 146);">
                                 <div class="card-body">
                                     <h5 class="card-title"><%= file.name %></h5>
-                                    <a href="/data<%=file.path%>" class="btn btn-primary">Ir >>></a>
-                                    <!-- <button class="ir-btn btn btn-primary" dirName= "<%= file.name %>">Ir >>></button> -->
-                                    
+
+                                    <a href="/data<%=file.path%>" class="btn btn-primary">Ir >>></a>                                   
                                     <button class="del-btn btn btn-danger" data-file-name="<%= file.name %>"><i class="bi bi-trash-fill"></i></button>
-                                    <a href="/edit/<%= file.name %>" class="btn btn-secondary" id="editBtn"><i class="bi bi-pencil-fill"></i></a>
+                                    <!-- <a href="/edit/<%= file.name %>" class="btn btn-secondary" id="editBtn"><i class="bi bi-pencil-fill"></i></a> -->
+                                    <button class="edit-btn btn btn-secondary" id="editBtn"><i class="bi bi-pencil-fill"></i></button>
                                 </div>
                             </div>
                         </div>                    
@@ -107,6 +107,62 @@
             
         })
     //#endregion
+    </script>
+    <!-- SCRIPT EDIT -->
+    <script>
+        const editButtons = document.querySelectorAll('.edit-btn'); // Seleciona todos os botões de delete
+
+        editButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                //seleciona .card mais proximo do edit pressionado
+                const card = button.closest('.card')
+                //titulo do card onde edit foi pressionado
+                const dirNameElement = card.querySelector('.card-title')
+
+                //nome atual do dir
+                const currentName = dirNameElement.textContent.trim()
+                
+                //ao clicar no botão edit, substitui zona de titulo por form de edit
+                dirNameElement.innerHTML = `        
+                    <form class="edit-form">
+                        <div class="row justify-content-start">
+                            <div class="col column-gap-3">
+                                <input type="text" class="form-control-sm g-col-auto" value="${currentName}" >
+                                <button type="submit" class="btn btn-primary col-3 btn-sm">Aplicar</button>
+                            </div>
+                        <div>
+                    </form>`
+                
+                const editForm = card.querySelector('.edit-form')
+                editForm.addEventListener('submit', async(e) => {
+                    e.preventDefault();
+                    //seleciona input do formulario de edit
+                    const input = editForm.querySelector('input');
+                    //extrai valor do input
+                    const newName = input.value.trim()
+
+                    if (newName && newName !== currentName) {
+                        try {
+                            fetch('/data/edit', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },                        
+                                body: JSON.stringify({ 
+                                    oldName: currentName,
+                                    newName: newName
+                                })
+                            })
+                            dirNameElement.textContent = newName
+                        } catch (error) {
+                            console.error("Erro edit: ", error)
+                        }
+                    } else {
+                        //Caso nome não tenha sido alterado ou esteja vazio, mantém o nome já presente
+                        dirNameElement.textContent = currentName
+                    }
+                })
+            });
+        })
+    
     </script>
     <% }%>
 </body>

@@ -87,9 +87,7 @@ exports.mkdirPost = (req,res) =>{
     } catch (err) {
         res.status(500).send("Erro a ir para criação de dir")
         console.error(err)
-    }
-    
-    
+    }    
 }
 
 exports.rmdir = (req,res) =>{
@@ -105,6 +103,21 @@ exports.rmdir = (req,res) =>{
     }
 }
 
+exports.editdir = (req,res) =>{
+    try {        
+        const dirAtual = urlHistory.getCurrentPath() 
+        const oldName = req.body.oldName
+        const newName = req.body.newName
+
+        fileService.editDir(oldName, newName, dirAtual)
+
+        res.redirect('/data' + dirAtual)
+        
+    } catch (error) {
+        res.status(500).send("Erro a editar diretorio")
+        console.error(error) 
+    }
+}
 
 // exports.goback = (req,res)=>{
 //     try{

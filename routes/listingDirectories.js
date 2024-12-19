@@ -8,6 +8,8 @@ router.get('/', fileController.listfolders)
 
 router.post('/delete', fileController.rmdir)
 
+router.post('/edit', fileController.editdir)
+
 router.get('/*', fileController.listfolders);
 
 module.exports = router;

@@ -53,8 +53,6 @@ class FileService{
     }
 
     rmDir(name, dirAtual){
-        //constrói path, até ao dir que vai ser criado
-
         //junta dir base com path guardada no historico
         const pathReq = path.join(this.baseDir, dirAtual)
         //junta dir construido acima, com nome do novo diretorio
@@ -67,7 +65,21 @@ class FileService{
         })
     }
 
-    //editDir
+    editDir(oldName, newName, dirAtual){
+        //junta dir base com path guardada no historico
+        const pathReq = path.join(this.baseDir, dirAtual)
+        //constroi path até ao dir que vai ser mudado
+        const oldPath = path.join(pathReq, oldName)
+        //constroi novo path, com novo nome
+        const newPath = path.join(pathReq, newName)
+        
+        fs.renameSync(oldPath, newPath), (err) =>{
+            console.log("Diretorio editado: ", 
+                "\nAntigo: ", oldPath, 
+                " \nNovo: ", newPath)
+            if (err) throw err;
+        } 
+    }
 
 }
 
