@@ -1,8 +1,8 @@
-const path = require('path');
+const root = './data'
 const FileService = require('../services/fileServices.js');
 const UrlHistory = require('../services/urlHistory.js');
 const urlHistory = new UrlHistory();
-const fileService = new FileService('./data')
+const fileService = new FileService(root)
 
 //guarda valor do dir atual guardado
 //mkdir assim já dá display do diretorio atual
@@ -38,17 +38,17 @@ exports.listfolders = (req, res) => {
 }; 
 
 exports.getfile = (req, res) => {
-    const dirAtual = urlHistory.getCurrentPath()
-    console.log(req.path)
+    try {        
+        const dirAtual = urlHistory.getCurrentPath()
+        console.log(req.path)
 
-    //ao clicar em "Ir >>>" num ficheiro, fará download no ficheiro para a máquina
-    res.download(req.path)
+        //ao clicar em "Ir >>>" num ficheiro, fará download no ficheiro para a máquina
+        res.download(root + dirAtual + decodeURIComponent(req.path))
 
-    // dirAtual == '/'  
-    // ? res.download('/data' + dirAtual + req.path) //caso o dir seja add em /data
-    // : res.download('/data' + dirAtual + '/' + req.path) //caso o dir seja add em dirs +2º grau
-
-    // res.redirect('/data' + dirAtual)
+    } catch (error) {
+        res.status(500).send("Erro download Ficheiro")
+        console.error(error)
+    }
 }
 
 
