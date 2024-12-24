@@ -16,8 +16,18 @@
                 dirAtual.forEach((dir, index) => {
                   currentPath += `/${dir}`;
                 %>
-                  <li class="nav-item">
-                    <a href="/data<%= currentPath %>"><h3>/<%= dir %></h3></a>
+                  <li class="nav-item nav-path">
+                    <button type="button" class="btn btn-light">
+                      <a href="/data<%= currentPath %>">
+                        <h5>
+                          <% if (dir == '/') { %>
+                            <%= dir %>
+                          <% } else { %>
+                            /<%= dir %>
+                          <% } %>
+                        </h5>
+                      </a>
+                    </button> 
                   </li>
                 <% }) %>               
             </ul>

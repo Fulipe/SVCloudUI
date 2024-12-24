@@ -29,6 +29,15 @@ body{
     margin: 0 2px;
 }
 
+.navCommands .nav-path a{
+    text-decoration: none;
+    color: black;
+}
+
+.navCommands .nav-path h5{
+    margin: 0;
+}
+
 #mkdirBtn{
     margin-left: 10px;
     padding: 6px 14px;
