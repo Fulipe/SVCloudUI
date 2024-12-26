@@ -113,6 +113,7 @@
             button.addEventListener('click', function () {
                 //seleciona .card mais proximo do edit pressionado
                 const card = button.closest('.card')
+
                 //titulo do card onde edit foi pressionado
                 const dirNameElement = card.querySelector('.card-title')
 
@@ -126,10 +127,20 @@
                             <div class="col column-gap-3">
                                 <input type="text" class="form-control-sm g-col-auto" value="${currentName}" >
                                 <button type="submit" class="btn btn-primary col-3 btn-sm">Aplicar</button>
+                                <button class="btn btn-danger col-sm-1 btn-sm" id="cancelCross"><i class="bi bi-x-lg"></i></button>
                             </div>
                         <div>
                     </form>`
+
                 
+                //vai buscar cruz do form, para cancelar operação
+                const cancelCross = card.querySelector('#cancelCross');
+                    
+                //retira o form, e recoloca o currentName
+                cancelCross.addEventListener('click', ()=> {
+                    dirNameElement.textContent = currentName
+                })
+                    
                 const editForm = card.querySelector('.edit-form')
                 editForm.addEventListener('submit', async(e) => {
                     e.preventDefault();
@@ -147,8 +158,13 @@
                                     oldName: currentName,
                                     newName: newName
                                 })
+
+                            }).then(() => {
+                            //dá reload à página para atualizar o valor do nome no browser
+                                location.reload()
+                                dirNameElement.textContent = newName
                             })
-                            dirNameElement.textContent = newName
+                            
                         } catch (error) {
                             console.error("Erro edit: ", error)
                         }
