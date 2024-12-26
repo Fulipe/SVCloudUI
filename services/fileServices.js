@@ -2,24 +2,30 @@ const fs = require('fs');
 const path = require('path');
 
 class FileService{
-    constructor(/*baseDir*/){
-        // this.baseDir = baseDir;
+    constructor(baseDir){
+        this.baseDir = baseDir;
     }
     
     //Verifica se existe diretório
     checkExistsDir(newdir, dirAtual){
-        const newDir = path.join(dirAtual, newdir)
-
+        //junta dir base com path guardada no historico
+        const pathReq = path.join(this.baseDir, dirAtual)
+        //junta dir construido acima, com nome do novo diretorio
+        const newDir = path.join(pathReq, newdir)
+        
         console.log(newDir)
         return fs.existsSync(newDir)
     }
-
-    //metodo recebe valor de req.params no controller
+    
+    //metodo recebe valor de req.path no controller
     listFiles(dir = ""){
-        console.log("PATH: " + dir)
+
+        //junta path do request ao dir base
+        const pathReq = path.join(this.baseDir, dir)
+        console.log("pathJunto: " + pathReq)
 
         //como o diretorio vem como array, .map() e atribui os valores a cada diretorio consoante embaixo
-        return fs.readdirSync(dir).map(file => ({
+        return fs.readdirSync(pathReq).map(file => ({
           
             //nome do ficheiro -> file  
             name: file,
@@ -28,13 +34,17 @@ class FileService{
             path: path.join(dir, file),
 
             //verifica se é diretorio
-            isDirectory: fs.lstatSync(path.join(dir, file)).isDirectory()
+            isDirectory: fs.lstatSync(path.join(pathReq, file)).isDirectory()
         }));   
     }
 
     mkdir(name, dirAtual){
         //constrói path, até ao dir que vai ser criado
-        const newDir = path.join(dirAtual, name)
+
+        //junta dir base com path guardada no historico
+        const pathReq = path.join(this.baseDir, dirAtual)
+        //junta dir construido acima, com nome do novo diretorio
+        const newDir = path.join(pathReq, name)
 
         fs.mkdir(newDir, (err)=>{
             console.log("Diretorio criado " + newDir)
@@ -42,9 +52,11 @@ class FileService{
         })
     }
 
-    rmDir(params, dirAtual){
-        //constrói path, até ao dir que vai ser eliminado
-        const dirDeleted = path.join(dirAtual, params)
+    rmDir(name, dirAtual){
+        //junta dir base com path guardada no historico
+        const pathReq = path.join(this.baseDir, dirAtual)
+        //junta dir construido acima, com nome do novo diretorio
+        const dirDeleted = path.join(pathReq, name)
 
         //elimina recursivamente, para que seja possivel eliminar diretorios com ficheiros
         fs.rm(dirDeleted, {recursive: true}, (err)=>{
@@ -53,7 +65,21 @@ class FileService{
         })
     }
 
-    //editDir
+    editDir(oldName, newName, dirAtual){
+        //junta dir base com path guardada no historico
+        const pathReq = path.join(this.baseDir, dirAtual)
+        //constroi path até ao dir que vai ser mudado
+        const oldPath = path.join(pathReq, oldName)
+        //constroi novo path, com novo nome
+        const newPath = path.join(pathReq, newName)
+        
+        fs.renameSync(oldPath, newPath, (err) =>{
+            console.log("Diretorio editado: ", 
+                "\nAntigo: ", oldPath, 
+                " \nNovo: ", newPath)
+            if (err) throw err;
+        }) 
+    }
 
 }
 

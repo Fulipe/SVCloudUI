@@ -3,24 +3,6 @@
 <%- include('shared/head') %>
 <body>
     <%- include('shared/navbar') -%>    
-    
-    <!-- Caixa de diálogo para confirmar a eliminação -->
-    <dialog id="confirmDelDialog">
-        <div class="container text-center">
-            <div class="row justify-content-between">
-                <h5 class="col-sm-4">Eliminar Diretório</h5>
-                <button class="btn col-sm-1" id="closeCross"><i class="bi bi-x-lg"></i></button>
-            </div>
-            <hr>
-            <div class="row">
-                <p>Tens a certeza de que queres eliminar o diretório <b><span id="nameDir"></span></b> e todo o seu conteúdo?</p>
-            </div>
-            <div class="row justify-content-end text-center">
-                <button class="btn btn-secondary col-sm-2" id="cancelDelete">Cancelar</button>
-                <button class="btn btn-danger col-sm-2 ms-1" id="confirmDelete"><i class="bi bi-trash-fill"></i>Apagar</button>
-            </div>
-        </div>
-    </dialog>
         
     <div class="row">
         <% if (files.length == 0) {%>
@@ -28,16 +10,34 @@
                 <h3 class="text-bg-danger"><%= emptyDirMsg %></h3>
             </div>
             <% } else { %>
+                    
+                <!-- Caixa de diálogo para confirmar a eliminação -->
+                <dialog id="confirmDelDialog">
+                    <div class="container text-center">
+                        <div class="row justify-content-between">
+                            <h5 class="col-sm-4">Eliminar Diretório</h5>
+                            <button class="btn col-sm-1" id="closeCross"><i class="bi bi-x-lg"></i></button>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <p>Tens a certeza de que queres eliminar o diretório <b><span id="nameDir"></span></b> e todo o seu conteúdo?</p>
+                        </div>
+                        <div class="row justify-content-end text-center">
+                            <button class="btn btn-secondary col-sm-2" id="cancelDelete">Cancelar</button>
+                            <button class="btn btn-danger col-sm-2 ms-1" id="confirmDelete"><i class="bi bi-trash-fill"></i>Apagar</button>
+                        </div>
+                    </div>
+                </dialog>
                 <% files.forEach(file => { %>
                     <% if (file.isDirectory) { %>
                         <div class="col-sm-4 mb-3 mb-sm-0">
                             <div class="card " style="background-color: rgb(243, 215, 146);">
                                 <div class="card-body">
                                     <h5 class="card-title"><%= file.name %></h5>
-                                    <a href="/folders/<%=file.name%>" class="btn btn-primary">Ir >>></a>
-                                    
+
+                                    <a href="/data<%=file.path%>" class="btn btn-primary">Ir >>></a>                                   
                                     <button class="del-btn btn btn-danger" data-file-name="<%= file.name %>"><i class="bi bi-trash-fill"></i></button>
-                                    <a href="/edit/<%= file.name %>" class="btn btn-secondary" id="editBtn"><i class="bi bi-pencil-fill"></i></a>
+                                    <button class="edit-btn btn btn-secondary" id="editBtn"><i class="bi bi-pencil-fill"></i></button>
                                 </div>
                             </div>
                         </div>                    
@@ -47,10 +47,8 @@
                                     <div class="card-body">
                                         <h5 class="card-title"><%= file.name %></h5>
                                         <a href="/files/<%=file.name%>" class="btn btn-primary">Ir >>></a>
-                                        
                                         <button class="btn btn-danger del-btn" data-file-name="<%= file.name %>"><i class="bi bi-trash-fill"></i></button>
-                                        <a href="/edit/<%= file.name %>" class="btn btn-secondary" id="editBtn"><i class="bi bi-pencil-fill"></i></a>
-                                    </div>
+                                        <button class="edit-btn btn btn-secondary" id="editBtn"><i class="bi bi-pencil-fill"></i></button>                                    </div>
                                 </div>
                             </div>     
                             
@@ -58,7 +56,127 @@
                 <% }); %>
             <% } %>                     
     </div>  
-    <script src="../utils/confirmationDelete.js">
+
+    <% if (files.length != 0) {%>
+    <!-- SCRIPT DELETE -->
+    <script> 
+        //#region DELETE
+        const deleteButtons = document.querySelectorAll('.del-btn'); // Seleciona todos os botões de delete
+        const nameDir = document.getElementById('nameDir');
+        const confirmDialog = document.getElementById('confirmDelDialog');
+        
+        const closeCross = document.getElementById('closeCross')
+        const confirmDelete = document.getElementById('confirmDelete');
+        const cancelDelete = document.getElementById('cancelDelete');
+        let fileNameToDelete = '';
+        
+        // Para cada botão, adicionar o evento de clique
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                fileNameToDelete = this.getAttribute('data-file-name'); // Obter o nome do ficheiro do atributo data
+                // console.log("A tentar eliminar:", fileNameToDelete); // Exibe o nome do ficheiro a ser eliminado
+                
+                nameDir.innerHTML = '/' + fileNameToDelete;
+                confirmDialog.showModal(); // Exibe o Dialog de confirmação
+            });
+        })
+        
+        cancelDelete.addEventListener('click', function () {
+            confirmDialog.close() //fecha Dialog ao clicar no botao cancelar
+        })
+        
+        closeCross.addEventListener('click', function () {
+            confirmDialog.close() //fecha Dialog ao clicar na cruz
+        })
+        
+        confirmDelete.addEventListener('click', function () {
+            fetch('/data/delete', {
+                method: 'POST',
+                body: JSON.stringify({ path: fileNameToDelete }),
+                headers: { 'Content-Type': 'application/json' }
+            }).then(() => {
+                location.reload()
+            })
+            .catch(error => {
+                console.error('Erro:', error);
+            });
+            confirmDialog.close()
+            
+        })
+    //#endregion
     </script>
+    <!-- SCRIPT EDIT -->
+    <script>
+        const editButtons = document.querySelectorAll('.edit-btn'); // Seleciona todos os botões de delete
+
+        editButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                //seleciona .card mais proximo do edit pressionado
+                const card = button.closest('.card')
+
+                //titulo do card onde edit foi pressionado
+                const dirNameElement = card.querySelector('.card-title')
+
+                //nome atual do dir
+                const currentName = dirNameElement.textContent.trim()
+                
+                //ao clicar no botão edit, substitui zona de titulo por form de edit
+                dirNameElement.innerHTML = `        
+                    <form class="edit-form">
+                        <div class="row justify-content-start">
+                            <div class="col column-gap-3">
+                                <input type="text" class="form-control-sm g-col-auto" value="${currentName}" >
+                                <button type="submit" class="btn btn-primary col-3 btn-sm">Aplicar</button>
+                                <button class="btn btn-danger col-sm-1 btn-sm" id="cancelCross"><i class="bi bi-x-lg"></i></button>
+                            </div>
+                        <div>
+                    </form>`
+
+                
+                //vai buscar cruz do form, para cancelar operação
+                const cancelCross = card.querySelector('#cancelCross');
+                    
+                //retira o form, e recoloca o currentName
+                cancelCross.addEventListener('click', ()=> {
+                    dirNameElement.textContent = currentName
+                })
+                    
+                const editForm = card.querySelector('.edit-form')
+                editForm.addEventListener('submit', async(e) => {
+                    e.preventDefault();
+                    //seleciona input do formulario de edit
+                    const input = editForm.querySelector('input');
+                    //extrai valor do input
+                    const newName = input.value.trim()
+
+                    if (newName && newName !== currentName) {
+                        try {
+                            fetch('/data/edit', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },                        
+                                body: JSON.stringify({ 
+                                    oldName: currentName,
+                                    newName: newName
+                                })
+
+                            }).then(() => {
+                            //dá reload à página para atualizar o valor do nome no browser
+                                location.reload()
+                                dirNameElement.textContent = newName
+                            })
+                            
+                        } catch (error) {
+                            console.error("Erro edit: ", error)
+                        }
+                    } else {
+                        //Caso nome não tenha sido alterado ou esteja vazio, mantém o nome já presente
+                        dirNameElement.textContent = currentName
+                    }
+                })
+            });
+        })
+    
+    </script>
+    <% }%>
 </body>
 </html> 

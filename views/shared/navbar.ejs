@@ -7,25 +7,29 @@
           <div class="navCommands">
             <ul>
                 <li class="nav-item"> 
-                  <a href="/back" class="btn btn-light" id="navBtn">                
-                    <i class="bi bi-caret-left-fill"></i>
-                  </a> 
-                </li>
-                <li class="nav-item"> 
-                  <a href="/forward" class="btn btn-light" id="navBtn">
-                    <i class="bi bi-caret-right-fill"></i>
-                  </a>
-                </li>
-                <li class="nav-item"> 
-                  <a href="/createdir" class="btn btn-success" id="mkdirBtn">
+                  <a href="/navigation/createdir" class="btn btn-success" id="mkdirBtn">
                     <i class="bi bi-plus-circle"></i><b> Criar</b>
                   </a>
                 </li>
-                <li class="nav-item">
-                  <a href="<%= dirAtual %>">
-                    <h3> <%= dirAtual %> </h3>
-                  </a>
-                </li>
+                <% 
+                let currentPath = ""; 
+                dirAtual.forEach((dir, index) => {
+                  currentPath += `/${dir}`;
+                %>
+                  <li class="nav-item nav-path">
+                    <button type="button" class="btn btn-light">
+                      <a href="/data<%= currentPath %>">
+                        <h5>
+                          <% if (dir == '/') { %>
+                            <%= dir %>
+                          <% } else { %>
+                            /<%= dir %>
+                          <% } %>
+                        </h5>
+                      </a>
+                    </button> 
+                  </li>
+                <% }) %>               
             </ul>
           </div>
       </div>
