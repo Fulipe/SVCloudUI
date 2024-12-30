@@ -5,7 +5,7 @@ const navigation = require('./routes/navigation');
 const files = require('./routes/files');
 
 const app = express()
-const PORT = 5602;
+const PORT = process.env.port;
 
 app.set("view engine", "ejs"); 
 app.use(express.static(__dirname + '/views/'));
