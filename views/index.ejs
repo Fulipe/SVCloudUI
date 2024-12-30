@@ -11,7 +11,7 @@
             </div>
             <% } else { %>
                     
-                <!-- Caixa de diálogo para confirmar a eliminação -->
+                <!-- Dialog for deleting confirmation -->
                 <dialog id="confirmDelDialog">
                     <div class="container text-center">
                         <div class="row justify-content-between">
@@ -48,7 +48,8 @@
                                         <h5 class="card-title"><%= file.name %></h5>
                                         <a href="/files/<%=file.name%>" class="btn btn-primary">Ir >>></a>
                                         <button class="btn btn-danger del-btn" data-file-name="<%= file.name %>"><i class="bi bi-trash-fill"></i></button>
-                                        <button class="edit-btn btn btn-secondary" id="editBtn"><i class="bi bi-pencil-fill"></i></button>                                    </div>
+                                        <button class="edit-btn btn btn-secondary" id="editBtn"><i class="bi bi-pencil-fill"></i></button>                                    
+                                    </div>
                                 </div>
                             </div>     
                             
@@ -61,7 +62,7 @@
     <!-- SCRIPT DELETE -->
     <script> 
         //#region DELETE
-        const deleteButtons = document.querySelectorAll('.del-btn'); // Seleciona todos os botões de delete
+        const deleteButtons = document.querySelectorAll('.del-btn'); // Selects all delete buttons
         const nameDir = document.getElementById('nameDir');
         const confirmDialog = document.getElementById('confirmDelDialog');
         
@@ -70,23 +71,21 @@
         const cancelDelete = document.getElementById('cancelDelete');
         let fileNameToDelete = '';
         
-        // Para cada botão, adicionar o evento de clique
         deleteButtons.forEach(button => {
             button.addEventListener('click', function () {
-                fileNameToDelete = this.getAttribute('data-file-name'); // Obter o nome do ficheiro do atributo data
-                // console.log("A tentar eliminar:", fileNameToDelete); // Exibe o nome do ficheiro a ser eliminado
-                
+                fileNameToDelete = this.getAttribute('data-file-name');               
                 nameDir.innerHTML = '/' + fileNameToDelete;
-                confirmDialog.showModal(); // Exibe o Dialog de confirmação
+                confirmDialog.showModal(); // Opens confirmation dialog
+
             });
         })
         
         cancelDelete.addEventListener('click', function () {
-            confirmDialog.close() //fecha Dialog ao clicar no botao cancelar
+            confirmDialog.close() //Closing dialog by clicking 'cancel'
         })
         
         closeCross.addEventListener('click', function () {
-            confirmDialog.close() //fecha Dialog ao clicar na cruz
+            confirmDialog.close() //Closing dialog by clicking 'cross'
         })
         
         confirmDelete.addEventListener('click', function () {
@@ -107,20 +106,19 @@
     </script>
     <!-- SCRIPT EDIT -->
     <script>
-        const editButtons = document.querySelectorAll('.edit-btn'); // Seleciona todos os botões de delete
+        const editButtons = document.querySelectorAll('.edit-btn'); // Selects all edit buttons
 
         editButtons.forEach(button => {
             button.addEventListener('click', function () {
-                //seleciona .card mais proximo do edit pressionado
+                //selects .card of the pressed button
                 const card = button.closest('.card')
 
-                //titulo do card onde edit foi pressionado
                 const dirNameElement = card.querySelector('.card-title')
 
-                //nome atual do dir
+                //Current directory name
                 const currentName = dirNameElement.textContent.trim()
                 
-                //ao clicar no botão edit, substitui zona de titulo por form de edit
+                //After clicking edit button, shows form to change name
                 dirNameElement.innerHTML = `        
                     <form class="edit-form">
                         <div class="row justify-content-start">
@@ -133,10 +131,10 @@
                     </form>`
 
                 
-                //vai buscar cruz do form, para cancelar operação
+                //form canceling cross 
                 const cancelCross = card.querySelector('#cancelCross');
                     
-                //retira o form, e recoloca o currentName
+                //when clicking on cancel, reshows unaltered name
                 cancelCross.addEventListener('click', ()=> {
                     dirNameElement.textContent = currentName
                 })
@@ -144,9 +142,8 @@
                 const editForm = card.querySelector('.edit-form')
                 editForm.addEventListener('submit', async(e) => {
                     e.preventDefault();
-                    //seleciona input do formulario de edit
+                    //input from editing form
                     const input = editForm.querySelector('input');
-                    //extrai valor do input
                     const newName = input.value.trim()
 
                     if (newName && newName !== currentName) {
@@ -160,16 +157,16 @@
                                 })
 
                             }).then(() => {
-                            //dá reload à página para atualizar o valor do nome no browser
+                            //Reloads page to show altered name
                                 location.reload()
                                 dirNameElement.textContent = newName
                             })
-                            
+
                         } catch (error) {
                             console.error("Erro edit: ", error)
                         }
                     } else {
-                        //Caso nome não tenha sido alterado ou esteja vazio, mantém o nome já presente
+                        //Show unaltered name, if the input got the same name, or came empty
                         dirNameElement.textContent = currentName
                     }
                 })

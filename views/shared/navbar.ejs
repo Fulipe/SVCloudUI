@@ -8,7 +8,12 @@
             <ul>
                 <li class="nav-item"> 
                   <a href="/navigation/createdir" class="btn btn-success" id="mkdirBtn">
-                    <i class="bi bi-plus-circle"></i><b> Criar</b>
+                    <i class="bi bi-plus-circle"></i><b> Criar Pasta</b>
+                  </a>
+                </li>
+                <li class="nav-item"> 
+                  <a href="/files/uploadFile" class="btn btn-primary">
+                    <i class="bi bi-file-earmark-arrow-up"></i><b> Carregar Ficheiro</b>
                   </a>
                 </li>
                 <% 
@@ -17,9 +22,9 @@
                   currentPath += `/${dir}`;
                 %>
                   <li class="nav-item nav-path">
-                    <button type="button" class="btn btn-light">
+                    <button type="button" class="btn btn-light ps-1 pe-1 pb-1 p-0 ">
                       <a href="/data<%= currentPath %>">
-                        <h5>
+                        <h3 class="mb-0">
                           <% if (dir == '/') { %>
                             <%= dir %>
                           <% } else { %>

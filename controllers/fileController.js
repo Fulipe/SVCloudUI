@@ -1,13 +1,17 @@
-const root = './data'
+require('dotenv').config()
 const FileService = require('../services/fileServices.js');
 const UrlHistory = require('../services/urlHistory.js');
+const path = require('path');
+const multer  = require('multer')
+
+var root = process.env.root
 const urlHistory = new UrlHistory();
 const fileService = new FileService(root)
 
-//guarda valor do dir atual guardado
-//mkdir assim já dá display do diretorio atual
+//Stores the value of the current directory 
 var dirAtualDisplayed = ''
 
+//lists directories
 exports.listfolders = (req, res) => {
     try {
 
@@ -37,21 +41,7 @@ exports.listfolders = (req, res) => {
 
 }; 
 
-exports.getfile = (req, res) => {
-    try {        
-        const dirAtual = urlHistory.getCurrentPath()
-        console.log(req.path)
-
-        //ao clicar em "Ir >>>" num ficheiro, fará download no ficheiro para a máquina
-        res.download(root + dirAtual + decodeURIComponent(req.path))
-
-    } catch (error) {
-        res.status(500).send("Erro download Ficheiro")
-        console.error(error)
-    }
-}
-
-
+//GET METHOD: create directories
 exports.mkdir = (req,res) => {
     try{
         //split aos dirs nos "/" para segmentar os links 
@@ -69,6 +59,7 @@ exports.mkdir = (req,res) => {
 
 };
 
+//POST METHOD: create directories
 exports.mkdirPost = (req,res) =>{
     try{
         //vai buscar apenas req.path guardado
@@ -104,10 +95,11 @@ exports.mkdirPost = (req,res) =>{
     }    
 }
 
-exports.rmdir = (req,res) =>{
+//Delete
+exports.delete = (req,res) =>{
     try {
         const dirAtual = urlHistory.getCurrentPath()
-        fileService.rmDir(req.body.path, dirAtual)
+        fileService.delete(req.body.path, dirAtual)
         
         res.redirect(dirAtualDisplayed)
         
@@ -117,13 +109,14 @@ exports.rmdir = (req,res) =>{
     }
 }
 
-exports.editdir = (req,res) =>{
+//Edit
+exports.edit = (req,res) =>{
     try {        
         const dirAtual = urlHistory.getCurrentPath() 
         const oldName = req.body.oldName
         const newName = req.body.newName
 
-        fileService.editDir(oldName, newName, dirAtual)
+        fileService.edit(oldName, newName, dirAtual)
 
         res.redirect('/data' + dirAtual)
         
@@ -133,26 +126,67 @@ exports.editdir = (req,res) =>{
     }
 }
 
-// exports.goback = (req,res)=>{
-//     try{
-//         // urlHistory.goBack();
-//         // dirAtualDisplayed = urlHistory.getCurrentPath() 
-//         // console.log("DirAtual goback: ", "/data" + dirAtualDisplayed)
+//Download Files
+exports.getfile = (req, res) => {
+    try {        
+        const dirAtual = urlHistory.getCurrentPath()
+        console.log(req.path)
 
-//     } catch (err){
-//         res.status(500).send("Erro a listar os ficheiros [exports.goback]")
-//         console.error(err)
-//     }
-// };
+        //ao clicar em "Ir >>>" num ficheiro, fará download no ficheiro para a máquina
+        res.download(root + dirAtual + decodeURIComponent(req.path))
 
-// exports.goforward = (req, res) => {
-//     try{
-//         urlHistory.goForward()
-//         const dirAtual = urlHistory.getCurrentPath() 
-//         res.redirect('/data' + dirAtual)
+    } catch (error) {
+        res.status(500).send("Erro download Ficheiro")
+        console.error(error)
+    }
+}
 
-//     } catch (err){
-//         res.status(500).send("Erro a listar os ficheiros [exports.goforward]")
-//         console.error(err)
-//     }
-// };
+//GET METHOD: Upload Files
+exports.uploadFile = (req,res) =>{
+    try{
+        //split aos dirs nos "/" para segmentar os links 
+        const dirSplit = dirAtualDisplayed == "/" ? dirAtualDisplayed.split('') : dirAtualDisplayed.split('/')
+        //inicialização variavel
+        console.log('upload: ', dirSplit)
+        const msgCheckDir = ''
+        const dirAtual = urlHistory.getCurrentPath()
+        console.log("Dir upload: ",dirAtual)
+        //dá render à view mkdir, e envia o nome do diretorio onde se vai adicionar um novo dir
+        res.render('upload', { dirAtual:dirSplit, msgCheckDir });
+        
+    } catch (err) {
+        res.status(500).send("Erro a ir para criação de dir")
+        console.error(err)
+    } 
+}
+
+//Multer
+//#region 
+const storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        const dirAtual = urlHistory.getCurrentPath()
+        const pathUpload = path.join(root, dirAtual)
+        cb(null, pathUpload)
+    },
+    filename: function (req, file, cb) {
+        // const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+        cb(null, file.originalname)
+    }
+})
+const upload = multer({storage})
+
+exports.multerUpload = upload.single('file');
+//#endregion
+
+//POST METHOD: Upload Files
+exports.uploadFilePost = (req, res) => {
+    try{
+        const dirAtual = urlHistory.getCurrentPath()
+        console.log(req.file)
+        console.log(dirAtual)
+        res.redirect('/data' + dirAtual ) //caso o dir seja add em /data
+    } catch (err) {
+        res.status(500).send("Erro a carregar ficheiro")
+        console.error(err)
+    }
+}

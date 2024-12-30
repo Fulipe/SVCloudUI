@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express');
 const listingDirectories = require('./routes/listingDirectories');
 const navigation = require('./routes/navigation');
@@ -16,12 +17,11 @@ app.get('/favicon.ico', (req, res) => res.status(204));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-//Sempre que se abre a app dá redirect para o middleware das routes
+//Redirects to listingDirectories route whenever root request is called
 app.get('/', (req, res)=>{
   res.redirect('/data')
 })
 
-//Middleware para ir buscar routes
 app.use('/data', listingDirectories);
 app.use('/files', files);
 app.use('/navigation', navigation);
@@ -29,26 +29,3 @@ app.use('/navigation', navigation);
 app.listen(PORT, () => {
   console.log("Listening on port " + PORT);
 });
-
-
-// const port = 5602
-// const dir = __dirname + '/data'
-
-// const express = require('express');
-// const serveIndex = require('serve-index');
-// const cors = require('cors')
-
-// const app = express()
-// app.disable("x-powered-by")
-// app.use(cors())
-// app.use(express.json());
-// app.use(express.urlencoded({ extended: true }));
-
-// app.get('/', (req,res)=>{
-//   res.send(`Server <a href="${ req.protocol + '://' + req.get('host') + req.originalUrl+"ftp"}">AAA</a>`)
-// })
-
-// app.use('/ftp', serveIndex(dir + '/'))
-
-
-// app.listen(port)

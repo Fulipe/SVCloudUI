@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<%- include('shared/head') %>
+<body>
+    <%- include('shared/navbar') -%>   
+    
+    <h2>Carregar ficheiro para o diretório:
+        <% for( let i = 0; i < dirAtual.length; i++ ) { %>
+            <% if (dirAtual[i] == "/") { %>
+                /                   
+            <% } else {%>
+                <%=dirAtual[i]%>/                
+            <% } %>
+      <% } %>
+    </h2>
+    <h4><%= msgCheckDir %></h4>
+    
+    <form action="/files/uploadFile" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" />
+        <button type="submit" class="btn btn-success"><i class="bi bi-file-earmark-arrow-up"></i><b> Carregar</b></button>
+    </form>
+    
+</body>
+</html>

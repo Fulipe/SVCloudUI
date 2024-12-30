@@ -1,5 +1,4 @@
 const express = require('express');
-// const multer = require('multer')
 const fileController = require('../controllers/fileController');
 const router = express.Router();
 
@@ -8,9 +7,9 @@ router.get('/', fileController.listfolders);
 
 router.get('/*', fileController.listfolders);
 
-router.post('/delete', fileController.rmdir);
+router.post('/delete', fileController.delete);
 
-router.post('/edit', fileController.editdir);
+router.post('/edit', fileController.edit);
 
 
 module.exports = router;
