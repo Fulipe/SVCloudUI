@@ -25,7 +25,7 @@ exports.listfolders = (req, res) => {
         //split aos dirs nos "/" para segmentar os links 
         const dirSplit = dirAtualDisplayed == "/" ? dirAtualDisplayed.split(' ') : dirAtualDisplayed.split('/')
         
-        const emptyDirMsg = "Diretorio Vazio"
+        const emptyDirMsg = "Empty Directory"
 
         //envia para fileService path completo, tirando o dir base
         const files = fileService.listFiles(dirAtualDisplayed || '');
@@ -69,7 +69,7 @@ exports.mkdirPost = (req,res) =>{
         if(fileService.checkExistsDir(req.body.nome, dirAtual) === true){
             
             //mensagem quando dir já existe
-            const msgCheckDir = 'O nome que inserido já existe num diretório. Insere outro nome'
+            const msgCheckDir = 'Name already given. Insert a different name.'
             
             res.render('mkdir', {dirAtual:dirSplit, msgCheckDir})
             

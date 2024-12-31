@@ -15,16 +15,16 @@
                 <dialog id="confirmDelDialog">
                     <div class="container text-center">
                         <div class="row justify-content-between">
-                            <h5 class="col-sm-4">Eliminar Diretório</h5>
+                            <h5 class="col-sm-4">Delete Item</h5>
                             <button class="btn col-sm-1" id="closeCross"><i class="bi bi-x-lg"></i></button>
                         </div>
                         <hr>
                         <div class="row">
-                            <p>Tens a certeza de que queres eliminar o diretório <b><span id="nameDir"></span></b> e todo o seu conteúdo?</p>
+                            <p>Are you sure you want to delete <b><span id="nameDir"></span></b>?</p>
                         </div>
                         <div class="row justify-content-end text-center">
-                            <button class="btn btn-secondary col-sm-2" id="cancelDelete">Cancelar</button>
-                            <button class="btn btn-danger col-sm-2 ms-1" id="confirmDelete"><i class="bi bi-trash-fill"></i>Apagar</button>
+                            <button class="btn btn-secondary col-sm-2" id="cancelDelete">Cancel</button>
+                            <button class="btn btn-danger col-sm-2 ms-1" id="confirmDelete"><i class="bi bi-trash-fill"></i>Delete</button>
                         </div>
                     </div>
                 </dialog>
@@ -35,7 +35,7 @@
                                 <div class="card-body">
                                     <h5 class="card-title"><%= file.name %></h5>
 
-                                    <a href="/data<%=file.path%>" class="btn btn-primary">Ir >>></a>                                   
+                                    <a href="/data<%=file.path%>" class="btn btn-primary">Go <i class="bi bi-arrow-right"></i></a>                                   
                                     <button class="del-btn btn btn-danger" data-file-name="<%= file.name %>"><i class="bi bi-trash-fill"></i></button>
                                     <button class="edit-btn btn btn-secondary" id="editBtn"><i class="bi bi-pencil-fill"></i></button>
                                 </div>
@@ -46,7 +46,7 @@
                                 <div class="card " style="background-color: rgb(123, 190, 217);">
                                     <div class="card-body">
                                         <h5 class="card-title"><%= file.name %></h5>
-                                        <a href="/files/<%=file.name%>" class="btn btn-primary">Ir >>></a>
+                                        <a href="/files/<%=file.name%>" class="btn btn-primary"><i class="bi bi-download"></i></a>
                                         <button class="btn btn-danger del-btn" data-file-name="<%= file.name %>"><i class="bi bi-trash-fill"></i></button>
                                         <button class="edit-btn btn btn-secondary" id="editBtn"><i class="bi bi-pencil-fill"></i></button>                                    
                                     </div>

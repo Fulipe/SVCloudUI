@@ -4,7 +4,7 @@
 <body>
     <%- include('shared/navbar') -%>   
     
-    <h2>Criar diretório em:
+    <h2>Create new folder at:
         <% for( let i = 0; i < dirAtual.length; i++ ) { %>
             <% if (dirAtual[i] == "/") { %>
                 /                   
@@ -18,10 +18,10 @@
     <form action="/navigation/createdir" method="post">
         <div class="row g-3">
             <div class="col-sm-4">
-                <input name="nome" type="text" class="form-control" placeholder="Escreve nome do novo diretório">
+                <input name="nome" type="text" class="form-control" placeholder="New folder name">
             </div>
             <div class="col-auto">
-                <button type="submit" class="btn btn-success"><i class="bi bi-plus-circle"></i><b> Criar Pasta</b></button>
+                <button type="submit" class="btn btn-success"><i class="bi bi-plus-circle"></i><b> Create Folder</b></button>
             </div>
         </div>
     </form>

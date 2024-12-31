@@ -4,7 +4,7 @@
 <body>
     <%- include('shared/navbar') -%>   
     
-    <h2>Carregar ficheiro para o diretório:
+    <h2>Uploa file to:
         <% for( let i = 0; i < dirAtual.length; i++ ) { %>
             <% if (dirAtual[i] == "/") { %>
                 /                   
@@ -17,7 +17,7 @@
     
     <form action="/files/uploadFile" method="post" enctype="multipart/form-data">
         <input type="file" name="file" />
-        <button type="submit" class="btn btn-success"><i class="bi bi-file-earmark-arrow-up"></i><b> Carregar</b></button>
+        <button type="submit" class="btn btn-success"><i class="bi bi-file-earmark-arrow-up"></i><b> Upload</b></button>
     </form>
     
 </body>
