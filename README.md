@@ -38,7 +38,6 @@ The app may not be suitable for public use purposes.
 * Node.js (v20 or higher)
 
 ## Steps
-### These steps are POSIX filesystem oriented
 
 1. Clone the repository:  
 ```
