@@ -1,7 +1,7 @@
 # SVCloudUI  
 ## Overview
   
-**SVCloudUI** is a webapp built with Express.js that scans a filesystem up from a root directory to their subsequent subdirectories and liststhem.  
+**SVCloudUI** is a webapp built with Express.js that scans a filesystem up from a root directory to their subsequent subdirectories and lists them.  
 
 It allows the user to easily list and navigate through directories in the remote filesystem from a root directory, and as well upload and download, and access files anytime.  
 
